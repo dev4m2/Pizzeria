@@ -1,0 +1,34 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "hostRequirements": {
+      "cpus": 2,
+      "memory": "8gb",
+      "storage": "32gb"
+    },
+    "waitFor": "onCreateCommand",
+    "updateContentCommand": "npm install",
+    "postCreateCommand": "",
+    "postAttachCommand": {
+      "server": "npm start"
+    },
+    "customizations": {
+      "codespaces": {
+        "openFiles": [
+          "index.js"
+        ]
+      },
+      "vscode": {
+        "extensions": [
+          "ahmadawais.shades-of-purple",
+          "MS-vsliveshare.vsliveshare"
+        ]
+      }
+    },
+    "portsAttributes": {
+      "3000": {
+        "label": "Application",
+        "onAutoForward": "openPreview"
+      }
+    },
+    "forwardPorts": [3000]
+  }
