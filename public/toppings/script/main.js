@@ -1,18 +1,18 @@
 const allToppings = 
     [
-        {"topping": "sauce", "description": "Marinara Sauce"}, 
-        {"topping": "mozzarella", "description": "Mozzarella Cheese<"}, 
-        {"topping": "cup-n-char", "description": "Cup n' Char Pepperoni"},
-        {"topping": "sausage", "description": "Ground Italian Sausage"},
-        {"topping": "meatballs", "description": "Meatballs"},
-        {"topping": "red-onion", "description": "thinly sliced Red Onion"},
-        {"topping": "xxx", "description": "yyy"}
+        {"style": "New York Style", "name": "xxx", "topping": "sauce", "description": "Marinara Sauce"}, 
+        {"style": "New York Style", "name": "xxx", "topping": "mozzarella", "description": "Mozzarella Cheese<"}, 
+        {"style": "New York Style", "name": "The Dr. John", "topping": "cup-n-char", "description": "Cup n' Char Pepperoni"},
+        {"style": "New York Style", "name": "The Dr. John", "topping": "sausage", "description": "Ground Italian Sausage"},
+        {"style": "New York Style", "name": "The Dr. John", "topping": "meatballs", "description": "Meatballs"},
+        {"style": "New York Style", "name": "The Dr. John", "topping": "red-onion", "description": "thinly sliced Red Onion"},
+        {"style": "New York Style", "name": "xxx", "topping": "xxx", "description": "yyy"}
     ];
 
 
+const btnQuestion = document.querySelector('#btnQuestion');
 
 // Reference the toppingsList element
-// var selectElement = document.getElementById('toppingsList');
 let selectElement = document.querySelector('#toppingsList');
 
 for (let i = 0; i < allToppings.length; i++) {
