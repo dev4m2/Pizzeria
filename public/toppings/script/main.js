@@ -19,6 +19,9 @@ let uniquePizzaStyles = null;
 // Global variable to store de-duped fetched data (based on Pizza Name)
 let uniquePizzaNames = null;
 
+// Global variable to store de-duped fetched data (based on Pizza Topping)
+let uniquePizzaToppings = null;
+
 // Global variable to store Pizza Names (filtered by Pizza Type)
 let filteredPizzasByStyle = null;
 
@@ -48,8 +51,11 @@ async function fetchJsonFile() {
         // Log the JSON object to the console
         console.log(allToppings);
 
+        // Get unique pizza toppings
+        uniquePizzaToppings = removeDuplicates(allToppings, "topping");
+
         // Create option elenents
-        populateOptions(allToppings);
+        populateOptions(uniquePizzaToppings);
 
         // Get Unique data (json, key)
         if (allToppings != null) {
@@ -69,7 +75,7 @@ async function fetchJsonFile() {
             uniquePizzaNames = removeDuplicates(filteredPizzasByStyle, "name");
             
             // Get the unique Pizza Name
-            pizzaName = uniquePizzaNames[1].name;
+            pizzaName = uniquePizzaNames[2].name;
 
             // Set innerText of Pizza Name element
             elementPizzaName.innerText = pizzaName;
