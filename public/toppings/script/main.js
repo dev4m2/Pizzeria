@@ -15,7 +15,7 @@
 const btnToppings = document.querySelector('#btnToppings');
 
 // Reference the toppingsList element
-const selectElement = document.querySelector('#toppingsList');
+const elementSelect = document.querySelector('#toppingsList');
 
 // Global variable to store the fetched data
 let allToppings = null;
@@ -40,22 +40,30 @@ async function fetchJsonFile() {
         // Log the JSON object to the console
         console.log(allToppings);
 
-        // Loop through json objects
-        if (allToppings != null) {
-            for (let i = 0; i < allToppings.length; i++) {
-                // Create a new option element
-                let newOption = document.createElement('option');
-            
-                // Set the value and text content of the new option
-                newOption.value = allToppings[i].topping;
-                newOption.textContent = allToppings[i].description;
-            
-                // Append the new option to the select element
-                selectElement.appendChild(newOption);
-            }
-        }
+        // Create option elenents
+        populateOptions(allToppings);
+
+        // Disable button
+        btnToppings.disabled = true;
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
+    }
+}
+
+function populateOptions(jsonArray) {
+    // Loop through json objects
+    if (jsonArray != null) {
+        for (let i = 0; i < jsonArray.length; i++) {
+            // Create a new option element
+            let newOption = document.createElement('option');
+        
+            // Set the value and text content of the new option
+            newOption.value = jsonArray[i].topping;
+            newOption.textContent = jsonArray[i].description;
+        
+            // Append the new option to the select element
+            elementSelect.appendChild(newOption);
+        }
     }
 }
 
