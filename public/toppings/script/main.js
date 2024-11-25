@@ -13,6 +13,21 @@ const elementSelect = document.querySelector('#toppingsList');
 // Global variable to store the fetched data
 let allToppings = null;
 
+// Global variable to store de-duped fetched data (based on Pizza Style)
+let uniquePizzaStyles = null;
+
+// Global variable to store de-duped fetched data (based on Pizza Name)
+let uniquePizzaNames = null;
+
+// Global variable to store Pizza Names (filtered by Pizza Type)
+let filteredPizzasByStyle = null;
+
+// Style of Pizza
+let pizzaStyle = elementPizzaStyle.innerText;
+
+// Name of Pizza
+let pizzaName = elementPizzaName.innerText;
+
 // Function to fetch the JSON file and read its contents
 async function fetchJsonFile() {
     try {
@@ -35,6 +50,30 @@ async function fetchJsonFile() {
 
         // Create option elenents
         populateOptions(allToppings);
+
+        // Get Unique data (json, key)
+        if (allToppings != null) {
+            // Get unique pizza styles
+            uniquePizzaStyles = removeDuplicates(allToppings, "style");
+            
+            // Get the unique Pizza Style
+            pizzaStyle = uniquePizzaStyles[0].style;
+
+            // Set innerText of Pizza Style element
+            elementPizzaStyle.innerText = pizzaStyle;
+
+            // Filter the list based on a condition
+            filteredPizzasByStyle = allToppings.filter(pizza => pizza.style == pizzaStyle);
+
+            // Get unique pizza names
+            uniquePizzaNames = removeDuplicates(filteredPizzasByStyle, "name");
+            
+            // Get the unique Pizza Name
+            pizzaName = uniquePizzaNames[1].name;
+
+            // Set innerText of Pizza Name element
+            elementPizzaName.innerText = pizzaName;
+        }
 
         // Disable button
         btnToppings.disabled = true;
@@ -60,16 +99,17 @@ function populateOptions(jsonArray) {
     }
 }
 
-// Style of Pizza
-let pizzaStyle = "New York Style";
-
-// Name of Pizza
-let pizzaName = "The Dr. John";
-
-// Set innerText of Pizza Style element
-elementPizzaStyle.innerText = pizzaStyle;
-
-elementPizzaName.innerText = pizzaName;
+function removeDuplicates(data, key) {
+    const seen = new Set();
+    return data.filter(item => {
+        const value = item[key];
+        if (!seen.has(value)) {
+            seen.add(value);
+            return true;
+        }
+        return false;
+    });
+}
 
 // Attach event listener to button
 btnToppings.addEventListener('click', fetchJsonFile);
