@@ -1,18 +1,11 @@
-// const allToppings = 
-//     [
-//         {"style": "New York Style", "name": "xxx", "topping": "sauce", "description": "Marinara Sauce"}, 
-//         {"style": "New York Style", "name": "xxx", "topping": "mozzarella", "description": "Mozzarella Cheese<"}, 
-//         {"style": "New York Style", "name": "The Dr. John", "topping": "cup-n-char", "description": "Cup n' Char Pepperoni"},
-//         {"style": "New York Style", "name": "The Dr. John", "topping": "sausage", "description": "Ground Italian Sausage"},
-//         {"style": "New York Style", "name": "The Dr. John", "topping": "meatballs", "description": "Meatballs"},
-//         {"style": "New York Style", "name": "The Dr. John", "topping": "red-onion", "description": "thinly sliced Red Onion"},
-//         {"style": "New York Style", "name": "xxx", "topping": "xxx", "description": "yyy"}
-//     ];
-
-
-
 // Reference the btnToppings element
 const btnToppings = document.querySelector('#btnToppings');
+
+// Pizza Style
+const elementPizzaStyle = document.querySelector('#pizzaStyle');
+
+// Pizza Name
+const elementPizzaName = document.querySelector('#pizzaName');
 
 // Reference the toppingsList element
 const elementSelect = document.querySelector('#toppingsList');
@@ -67,5 +60,16 @@ function populateOptions(jsonArray) {
     }
 }
 
+// Style of Pizza
+let pizzaStyle = "New York Style";
+
+// Name of Pizza
+let pizzaName = "The Dr. John";
+
+// Set innerText of Pizza Style element
+elementPizzaStyle.innerText = pizzaStyle;
+
+elementPizzaName.innerText = pizzaName;
+
 // Attach event listener to button
-btnToppings.addEventListener('click', fetchJsonFile)
+btnToppings.addEventListener('click', fetchJsonFile);
