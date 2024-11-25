@@ -1,6 +1,9 @@
 // Reference the btnToppings element
 const btnToppings = document.querySelector('#btnToppings');
 
+// Reference the btnSubmit element
+const btnSubmit = document.querySelector('#btnSubmit');
+
 // Pizza Style
 const elementPizzaStyle = document.querySelector('#pizzaStyle');
 
@@ -12,6 +15,9 @@ const elementSelect = document.querySelector('#toppingsList');
 
 // Global variable to store the fetched data
 let allToppings = null;
+
+// Global variable to store user-selected options
+let participantAnswerArray = [];
 
 // Global variable to store de-duped fetched data (based on Pizza Style)
 let uniquePizzaStyles = null;
@@ -117,5 +123,23 @@ function removeDuplicates(data, key) {
     });
 }
 
-// Attach event listener to button
+function submitAnswers() {
+    // Clear array
+    participantAnswerArray.length = 0;
+
+    // Get items selected in toppings list
+    let selectedAnswers = elementSelect.selectedOptions;
+
+    // Add toppings to array of participant answers
+    for (let j = 0; j < selectedAnswers.length; j++) {
+        participantAnswerArray.push(selectedAnswers[j].innerText);
+    }
+
+    // Sort array
+    participantAnswerArray.sort();
+}
+
+// Attach event listener to button(s)
 btnToppings.addEventListener('click', fetchJsonFile);
+
+btnSubmit.addEventListener('click', submitAnswers);
