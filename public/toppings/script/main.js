@@ -69,7 +69,7 @@ async function fetchJsonFile() {
             uniquePizzaStyles = removeDuplicates(allToppings, "style");
             
             // Get the unique Pizza Style
-            pizzaStyle = uniquePizzaStyles[0].style;
+            pizzaStyle = uniquePizzaStyles[0].style; // New York Style
 
             // Set innerText of Pizza Style element
             elementPizzaStyle.innerText = pizzaStyle;
@@ -81,7 +81,7 @@ async function fetchJsonFile() {
             uniquePizzaNames = removeDuplicates(filteredPizzasByStyle, "name");
             
             // Get the unique Pizza Name
-            pizzaName = uniquePizzaNames[2].name;
+            pizzaName = uniquePizzaNames[7].name; // Mt Lumi
 
             // Set innerText of Pizza Name element
             elementPizzaName.innerText = pizzaName;
