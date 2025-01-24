@@ -3,7 +3,7 @@
     {"style": "New York Style", "name": "The Dr. John", "topping": "cup-n-char-pepperoni", "description": "Cup n' Char Pepperoni"},
     {"style": "New York Style", "name": "The Dr. John", "topping": "sausage", "description": "Ground Italian Sausage"},
     {"style": "New York Style", "name": "The Dr. John", "topping": "meatballs", "description": "Meatballs"},
-    {"style": "New York Style", "name": "The Dr. John", "topping": "red-onion", "description": "thinly sliced Red Onion"},
+    {"style": "New York Style", "name": "The Dr. John", "topping": "thinly-sliced-red-onion", "description": "thinly sliced Red Onion"},
     {"style": "New York Style", "name": "Pistach-I-Dew", "topping": "no-sauce", "description": "No Sauce"}, 
     {"style": "New York Style", "name": "Pistach-I-Dew", "topping": "pistachios", "description": "Pistachios"}, 
     {"style": "New York Style", "name": "Pistach-I-Dew", "topping": "peppadew-peppers", "description": "Peppadew Peppers"}, 

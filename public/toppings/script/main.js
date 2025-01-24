@@ -16,20 +16,26 @@ const elementSelect = document.querySelector('#toppingsList');
 // Global variable to store the fetched data
 let allToppings = null;
 
-// Global variable to store user-selected options
+// Global variable to store user-selected Toppings
 let participantAnswerArray = [];
 
-// Global variable to store de-duped fetched data (based on Pizza Style)
+// Global variable to store de-duped Pizza Styles
 let uniquePizzaStyles = null;
 
-// Global variable to store de-duped fetched data (based on Pizza Name)
+// Global variable to store de-duped Pizza Names
 let uniquePizzaNames = null;
 
-// Global variable to store de-duped fetched data (based on Pizza Topping)
-let uniquePizzaToppings = null;
+// Global variable to store de-duped Pizza Toppings
+let uniqueToppings = null;
 
-// Global variable to store Pizza Names (filtered by Pizza Type)
-let filteredPizzasByStyle = null;
+// Global variable to store de-duped and sorted Pizza Toppings
+let sortedUniqueToppings = null;
+
+// Global variable to store Toppings by Pizza Style
+let filteredToppingsByPizzaStyle = null;
+
+// Global variable to store Toppings by Pizza Name
+let filteredToppingsByPizzaName = null;
 
 // Style of Pizza
 let pizzaStyle = elementPizzaStyle.innerText;
@@ -55,13 +61,27 @@ async function fetchJsonFile() {
         allToppings = data;
 
         // Log the JSON object to the console
-        console.log(allToppings);
+        // console.log(allToppings);
 
         // Get unique pizza toppings
-        uniquePizzaToppings = removeDuplicates(allToppings, "topping");
+        uniqueToppings = removeDuplicates(allToppings, "description");
+
+        // Copy array (safely copies deeply nested objects/arrays)
+        sortedUniqueToppings = JSON.parse(JSON.stringify(uniqueToppings))
+
+        // Sort array of pizzas by description
+        sortedUniqueToppings.sort((a, b) => {
+            if (a.description < b.description) {
+              return -1;
+            }
+            if (a.description > b.description) {
+              return 1;
+            }
+            return 0;
+        });
 
         // Create option elenents
-        populateOptions(uniquePizzaToppings);
+        populateOptions(sortedUniqueToppings);
 
         // Get Unique data (json, key)
         if (allToppings != null) {
@@ -69,19 +89,24 @@ async function fetchJsonFile() {
             uniquePizzaStyles = removeDuplicates(allToppings, "style");
             
             // Get the unique Pizza Style
-            pizzaStyle = uniquePizzaStyles[0].style; // New York Style
+            // pizzaStyle = uniquePizzaStyles[0].style; // New York Style
+            pizzaStyle = uniquePizzaStyles[2].style; // Detroit Style
 
             // Set innerText of Pizza Style element
             elementPizzaStyle.innerText = pizzaStyle;
 
-            // Filter the list based on a condition
-            filteredPizzasByStyle = allToppings.filter(pizza => pizza.style == pizzaStyle);
-
+            // Get pizza toppings based on style of pizza
+            filteredToppingsByPizzaStyle = allToppings.filter(pizza => pizza.style == pizzaStyle);
+            
             // Get unique pizza names
-            uniquePizzaNames = removeDuplicates(filteredPizzasByStyle, "name");
+            uniquePizzaNames = removeDuplicates(filteredToppingsByPizzaStyle, "name");
             
             // Get the unique Pizza Name
-            pizzaName = uniquePizzaNames[7].name; // Mt Lumi
+            // pizzaName = uniquePizzaNames[7].name; // Mt Lumi
+            pizzaName = uniquePizzaNames[4].name; // The Meatball
+            
+            // Get pizza toppings based on name of pizza
+            filteredToppingsByPizzaName = allToppings.filter(pizza => pizza.name == pizzaName);
 
             // Set innerText of Pizza Name element
             elementPizzaName.innerText = pizzaName;
@@ -124,6 +149,9 @@ function removeDuplicates(data, key) {
 }
 
 function submitAnswers() {
+    // Clear counter
+    let identifiedToppingsCount = 0;
+
     // Clear array
     participantAnswerArray.length = 0;
 
@@ -131,12 +159,18 @@ function submitAnswers() {
     let selectedAnswers = elementSelect.selectedOptions;
 
     // Add toppings to array of participant answers
-    for (let j = 0; j < selectedAnswers.length; j++) {
-        participantAnswerArray.push(selectedAnswers[j].innerText);
+    for (let i = 0; i < selectedAnswers.length; i++) {
+        participantAnswerArray.push(selectedAnswers[i].innerText);
     }
 
-    // Sort array
-    participantAnswerArray.sort();
+    // Compare toppings selected with actual pizza
+    filteredToppingsByPizzaName.forEach(filteredTopping => {
+        participantAnswerArray.find(item => item === filteredTopping['description'] ? identifiedToppingsCount++ : null)
+    })
+
+    // Did we select all of the appropriate toppings?
+    // identifiedToppingsCount === filteredToppingsByPizzaName.length ? console.log('Correct!') : console.log('Try again... ☹')
+    identifiedToppingsCount === filteredToppingsByPizzaName.length ? alert('Correct!') : alert('Try again... ☹')
 }
 
 // Attach event listener to button(s)
