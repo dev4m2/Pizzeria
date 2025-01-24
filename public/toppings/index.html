@@ -19,15 +19,79 @@
         <label for="toppingsList">Choose the correct topping(s):</label>
         <br><br>
 
-        <select name="pizza-toppings" id="toppingsList" multiple>
-            <!-- <option value="sauce">Marinara Sauce</option>
-            <option value="mozzarella">Mozzarella Cheese</option>
-            <option value="cup-n-char">Cup n' Char Pepperoni</option>
-            <option value="sausage">Ground Italian Sausage</option>
-            <option value="meatballs">Meatballs</option>
-            <option value="red-onion">thinly sliced Red Onion</option> -->
-        </select>
-        <br><br>
+        <section class="container">
+
+            <section class="toppings">
+                <select name="pizza-toppings" id="toppingsList" multiple>
+                    <!-- <option value="sauce">Marinara Sauce</option>
+                    <option value="mozzarella">Mozzarella Cheese</option>
+                    <option value="cup-n-char">Cup n' Char Pepperoni</option>
+                    <option value="sausage">Ground Italian Sausage</option>
+                    <option value="meatballs">Meatballs</option>
+                    <option value="red-onion">thinly sliced Red Onion</option> -->
+                </select>
+                <br><br>
+            </section>
+
+            <section class="categories">
+                <section class="classCheese">
+                    <fieldset>
+                        <legend>Cheese</legend>
+                        <input type="checkbox" id="chkMozarella" name="mozarella" value="Yes!" />
+                        <label for="chkMozarella">Mozarella</label>
+                    </fieldset>
+                </section>
+
+                <section class="classMeat">
+                    <fieldset>
+                        <legend>Meat</legend>
+                        <input type="checkbox" id="chkGroundItalianSausage" name="ground italian sausage" value="Yes!" />
+                        <label for="chkGroundItalianSausage">Ground Italian Sausage</label>
+                    </fieldset>
+                </section>
+
+                <section class="classVegetable">
+                    <fieldset>
+                        <legend>Vegetable</legend>
+                        <input type="checkbox" id="chkRedOnion" name="red onion" value="Yes!" />
+                        <label for="chkRedOnion">Red Onion</label>
+                    </fieldset>
+                </section>
+
+                <section class="classFruit">
+                    <fieldset>
+                        <legend>Fruit</legend>
+                        <input type="checkbox" id="chkRoastedRedPepper" name="roasted red pepper" value="Yes!" />
+                        <label for="chkRoastedRedPepper">Roasted Red Pepper</label>
+                    </fieldset>
+                </section>
+
+                <section class="classSauce">
+                    <fieldset>
+                        <legend>Sauce</legend>
+                        <input type="checkbox" id="chkFireInTheHive" name="fire in the hive" value="Yes!" />
+                        <label for="chkFireInTheHive">'Fire In The Hive' hot honey drizzle</label>
+                    </fieldset>
+                </section>
+
+                <section class="classHerb">
+                    <fieldset>
+                        <legend>Herb</legend>
+                        <input type="checkbox" id="chkWholeRoastedGarlic" name="whole roasted garlic" value="Yes!" />
+                        <label for="chkWholeRoastedGarlic">Whole Roasted Garlic</label>
+                    </fieldset>
+                </section>
+                
+                <section class="classAdditional">
+                    <fieldset>
+                        <legend>Additional</legend>
+                        <input type="checkbox" id="chkPistachios" name="pistachios" value="Yes!" />
+                        <label for="chkPistachios">Pistachios</label>
+                    </fieldset>
+                </section>
+            </section>
+
+        </section>
 
         <!-- <input type="submit" value="Submit" id="btnSubmit"> -->
 
