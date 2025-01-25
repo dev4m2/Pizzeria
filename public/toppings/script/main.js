@@ -243,19 +243,33 @@ function submitAnswers() {
     participantAnswerArray.length = 0;
 
     // Get items selected in toppings list
-    let selectedAnswers = elementSelect.selectedOptions;
+    // let selectedAnswers = elementSelect.selectedOptions;
 
     // Add toppings to array of participant answers
-    for (let i = 0; i < selectedAnswers.length; i++) {
-        participantAnswerArray.push(selectedAnswers[i].innerText);
-    }
+    // for (let i = 0; i < selectedAnswers.length; i++) {
+    //     participantAnswerArray.push(selectedAnswers[i].innerText);
+    // }
+
+    // Get all checkboxes on the page
+    const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+
+    // Filter checked checkboxes
+    const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+    checkedCheckboxes.forEach(checkbox => {
+        participantAnswerArray.push(checkbox.value);
+    });
+
+    console.log(participantAnswerArray);
+
 
     // Compare toppings selected with actual pizza
     sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
         participantAnswerArray.find(item => item === filteredTopping ? identifiedToppingsCount++ : null)
     })
 
-    // Did we select all of the appropriate toppings?
+    // // Did we select all of the appropriate toppings?
+    // identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? console.log('Correct!') : console.log('Try again... ☹')
     identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? alert('Correct!') : alert('Try again... ☹')
 }
 
