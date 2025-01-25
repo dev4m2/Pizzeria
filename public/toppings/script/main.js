@@ -87,8 +87,9 @@ function processApiData () {
         )];
         
         // Get the unique Pizza Style
-        // pizzaStyle = sortedUniquePizzaStyles[1]; // e.g. "New York Style"
-        pizzaStyle = sortedUniquePizzaStyles[0]; // e.g. "Detroit Style"
+        let indexPizzaStyle = sortedUniquePizzaStyles.indexOf('New York Style');
+        // let indexPizzaStyle = sortedUniquePizzaStyles.indexOf('Detroit Style');
+        pizzaStyle = sortedUniquePizzaStyles[indexPizzaStyle];
 
         // Set innerText of Pizza Style element
         elementPizzaStyle.innerText = pizzaStyle;
@@ -102,8 +103,9 @@ function processApiData () {
         )];
         
         // Get the unique Pizza Name
-        // pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[0]; // e.g. "Mt Lumi" ("New York Style")
-        pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[3]; // e.g. "The Meatball"
+        let indexPizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle.indexOf('Mt Lumi');
+        // let indexPizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle.indexOf('The Meatball');
+        pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[indexPizzaName];
         
         // Set innerText of Pizza Name element
         elementPizzaName.innerText = pizzaName;
