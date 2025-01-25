@@ -82,7 +82,7 @@ async function fetchJsonFile() {
             )];
             
             // Get the unique Pizza Name
-            pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[0]; // e.g. "Mt Lumi" ("New York Style")
+            // pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[0]; // e.g. "Mt Lumi" ("New York Style")
             pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[3]; // e.g. "The Meatball"
             
             // Set innerText of Pizza Name element
@@ -96,6 +96,13 @@ async function fetchJsonFile() {
                 .sort()
             )];
 
+            // Get unique and sorted Pizza Categories
+            sortedUniqueToppingCategories = [...new Set(
+                allToppings
+                .map(item => item.category)
+                .sort()
+            )];
+
             // Get unique and sorted Pizza Toppings
             sortedUniquePizzaToppings = [...new Set(
                 allToppings
@@ -105,6 +112,9 @@ async function fetchJsonFile() {
 
             // Create option elenents
             populateOptions(sortedUniquePizzaToppings);
+
+            // Create ...
+            populateToppingsByCategory(sortedUniqueToppingCategories, sortedUniquePizzaToppings);
         }
 
         // Disable button
@@ -144,6 +154,34 @@ function createVisualCategories(jsonArray) {
         
             // Append the new option to the select element
             elementSelect.appendChild(newOption);
+        }
+    }
+}
+
+//function populateToppingsByCategory(jsonArray) {
+function populateToppingsByCategory(categories, toppings) {
+    // Loop through array
+    if (categories != null) {
+        //for (let countCat = 0; countCat < categories.length; countCat++) {
+        for (const category of categories) {
+            let sectionCategory = document.querySelector(`.${category}>fieldset`);
+
+            //for (const topping of toppings) {
+            for (let countTopping = 0; countTopping < toppings.length; countTopping++) {
+                if (category === 'Cheese' && toppings[countTopping] === 'Piped Ricotta') {
+                    // Create a new option element
+                    let newOption = document.createElement('input');
+                    
+                    // Set the value and text content of the new option
+                    newOption.type = "checkbox";
+                    newOption.id = `chk${category}${countTopping}`;
+                    newOption.name = toppings[countTopping];
+                    newOption.value = 0;
+                    
+                    // Append the new option to the select element
+                    sectionCategory.appendChild(newOption);
+                }
+            }
         }
     }
 }
