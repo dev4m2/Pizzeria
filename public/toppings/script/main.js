@@ -1,9 +1,3 @@
-// Reference the btnToppings element
-const btnToppings = document.querySelector('#btnToppings');
-
-// Reference the btnSubmit element
-const btnSubmit = document.querySelector('#btnSubmit');
-
 // Reference the Pizza Style element
 const elementPizzaStyle = document.querySelector('#pizzaStyle');
 
@@ -13,8 +7,23 @@ const elementPizzaName = document.querySelector('#pizzaName');
 // Reference the toppingsList element
 const elementSelect = document.querySelector('#toppingsList');
 
+// Reference the btnToppings element
+const btnToppings = document.querySelector('#btnToppings');
+
+// Reference the btnSubmitResponse element
+const btnSubmitResponse = document.querySelector('#btnSubmitResponse');
+
+// Reference the btnClearResponse element
+const btnClearResponse = document.querySelector('#btnClearResponse');
+
+// Reference the btnRevealAnswers element
+const btnRevealAnswers = document.querySelector('#btnRevealAnswers');
+
+// Reference the btnClearAnswers element
+const btnClearAnswers = document.querySelector('#btnClearAnswers');
+
 // Global variable to store the fetched data
-// let allToppings = null;
+let allToppings = null;
 
 // Global variable to store user-selected Toppings
 let participantAnswerArray = [];
@@ -54,6 +63,9 @@ async function fetchJsonFile() {
         // Parse the JSON content
         let data = await response.json();
 
+        // Copy data values (not reference) to global array of objects
+        allToppings = JSON.parse(JSON.stringify(data));
+
         // Disable button
         btnToppings.disabled = true;
 
@@ -64,8 +76,8 @@ async function fetchJsonFile() {
     }
 }
 
-function processApiData (allToppings) {
-    // Get Unique data (json, key)
+function processApiData () {
+    // Get data
     if (allToppings != null) {
         // Get unique and sorted pizza styles
         sortedUniquePizzaStyles = [...new Set(
@@ -120,7 +132,7 @@ function processApiData (allToppings) {
         )];
 
         // Create option elenents
-        populateOptions(sortedUniquePizzaToppings);
+        // populateOptions(sortedUniquePizzaToppings);
 
         // Create "categories" container elements
         populateCategories(sortedUniqueToppingCategories);
@@ -235,21 +247,47 @@ function populateToppingsByCategory(category, toppings) {
     }
 }
 
-function submitAnswers() {
-    // Clear counter
-    let identifiedToppingsCount = 0;
+function submitResponse() {
+    // Get data
+    if (allToppings != null) {
+        // Clear counter
+        let identifiedToppingsCount = 0;
 
-    // Clear array
-    participantAnswerArray.length = 0;
+        // Clear array
+        participantAnswerArray.length = 0;
 
-    // Get items selected in toppings list
-    // let selectedAnswers = elementSelect.selectedOptions;
+        // Get items selected in toppings list
+        // let selectedAnswers = elementSelect.selectedOptions;
 
-    // Add toppings to array of participant answers
-    // for (let i = 0; i < selectedAnswers.length; i++) {
-    //     participantAnswerArray.push(selectedAnswers[i].innerText);
-    // }
+        // Add toppings to array of participant answers
+        // for (let i = 0; i < selectedAnswers.length; i++) {
+        //     participantAnswerArray.push(selectedAnswers[i].innerText);
+        // }
 
+        // Get all checkboxes on the page
+        const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+
+        // Filter checked checkboxes
+        const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+        checkedCheckboxes.forEach(checkbox => {
+            participantAnswerArray.push(checkbox.value);
+        });
+
+        console.log(participantAnswerArray);
+
+        // Compare toppings selected with actual pizza
+        sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
+            participantAnswerArray.find(item => item === filteredTopping ? identifiedToppingsCount++ : null);
+        })
+
+        // // Did we select all of the appropriate toppings?
+        // identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? console.log('Correct!') : console.log('Try again... ☹')
+        participantAnswerArray.length === identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? alert('Correct!') : alert('Try again... ☹')
+    }
+}
+
+function clearResponse() {
     // Get all checkboxes on the page
     const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
 
@@ -257,23 +295,71 @@ function submitAnswers() {
     const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
 
     checkedCheckboxes.forEach(checkbox => {
-        participantAnswerArray.push(checkbox.value);
+        checkbox.checked = false;
     });
-
-    console.log(participantAnswerArray);
-
-
-    // Compare toppings selected with actual pizza
-    sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
-        participantAnswerArray.find(item => item === filteredTopping ? identifiedToppingsCount++ : null)
-    })
-
-    // // Did we select all of the appropriate toppings?
-    // identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? console.log('Correct!') : console.log('Try again... ☹')
-    identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? alert('Correct!') : alert('Try again... ☹')
 }
 
-// Attach event listener to button(s)
+function revealAnswers() {
+    // Get data
+    if (allToppings != null) {
+        // Name of Pizza
+        let pizzaName = elementPizzaName.innerText;
+
+        // Get all checkboxes on the page
+        const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+
+        // Get all labels on the page
+        const labels = document.querySelectorAll('.categories label');
+
+        // Compare toppings selected with actual pizza
+        sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
+            // checkboxes.forEach(checkbox => {
+            //     checkbox.value === filteredTopping ? checkbox.checked = true : null;
+            // });
+
+            labels.forEach(label => {
+                label.textContent === filteredTopping ? label.style.backgroundColor = "cyan" : null;
+            });
+        })
+    }
+}
+
+function clearAnswers() {
+    // Get data
+    if (allToppings != null) {
+        // Name of Pizza
+        let pizzaName = elementPizzaName.innerText;
+
+        // Get all checkboxes on the page
+        const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+
+        // Get all labels on the page
+        const labels = document.querySelectorAll('.categories label');
+
+        // Compare toppings selected with actual pizza
+        sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
+            // checkboxes.forEach(checkbox => {
+            //     checkbox.value === filteredTopping ? checkbox.checked = false : null;
+            // });
+
+            labels.forEach(label => {
+                label.textContent === filteredTopping ? label.style.backgroundColor = "" : null;
+            });
+        })
+    }
+}
+
+// Retrieve JSON data
 btnToppings.addEventListener('click', fetchJsonFile);
 
-btnSubmit.addEventListener('click', submitAnswers);
+// Check my responses (answers)
+btnSubmitResponse.addEventListener('click', submitResponse);
+
+// Clear all responses (answers)
+btnClearResponse.addEventListener('click', clearResponse);
+
+// Show correct answers
+btnRevealAnswers.addEventListener('click', revealAnswers);
+
+// Clear correct answers
+btnClearAnswers.addEventListener('click', clearAnswers);

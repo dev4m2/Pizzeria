@@ -16,22 +16,24 @@
 
         <h3 id="pizzaName">Pizza Name</h3>
 
-        <label for="toppingsList">Choose the correct topping(s):</label>
-        <br><br>
+        <span>Choose the correct toppings:</span>
+
+        <!-- <label for="toppingsList">Choose the correct topping(s):</label>
+        <br><br> -->
 
         <section class="container">
 
-            <section class="toppings">
+            <!-- <section class="toppings">
                 <select name="pizza-toppings" id="toppingsList" multiple>
-                    <!-- <option value="sauce">Marinara Sauce</option>
+                    <option value="sauce">Marinara Sauce</option>
                     <option value="mozzarella">Mozzarella Cheese</option>
                     <option value="cup-n-char">Cup n' Char Pepperoni</option>
                     <option value="sausage">Ground Italian Sausage</option>
                     <option value="meatballs">Meatballs</option>
-                    <option value="red-onion">thinly sliced Red Onion</option> -->
+                    <option value="red-onion">thinly sliced Red Onion</option>
                 </select>
                 <br><br>
-            </section>
+            </section> -->
 
             <section class="categories">
 
@@ -55,63 +57,22 @@
                     </fieldset>
                 </section> -->
 
-                <!-- <section class="Vegetable">
-                    <fieldset>
-                        <legend>Vegetable</legend>
-                        <div class="option">
-                            <input type="checkbox" id="chkRedOnion" name="Vegetable" value="Red Onion" />
-                            <label for="chkRedOnion">Red Onion</label>
-                        </div>
-                    </fieldset>
-                </section> -->
-
-                <!-- <section class="Fruit">
-                    <fieldset>
-                        <legend>Fruit</legend>
-                        <div class="option">
-                            <input type="checkbox" id="chkRoastedRedPepper" name="Fruit" value="Roasted Red Pepper" />
-                            <label for="chkRoastedRedPepper">Roasted Red Pepper</label>
-                        </div>
-                    </fieldset>
-                </section> -->
-
-                <!-- <section class="Sauce">
-                    <fieldset>
-                        <legend>Sauce</legend>
-                        <div class="option">
-                            <input type="checkbox" id="chkFireInTheHive" name="Sauce" value="Fire In The Hive" />
-                            <label for="chkFireInTheHive">'Fire In The Hive' hot honey drizzle</label>
-                        </div>
-                    </fieldset>
-                </section> -->
-
-                <!-- <section class="Herb">
-                    <fieldset>
-                        <legend>Herb</legend>
-                        <div class="option">
-                            <input type="checkbox" id="chkWholeRoastedGarlic" name="Herb" value="Whole Roasted Garlic" />
-                            <label for="chkWholeRoastedGarlic">Whole Roasted Garlic</label>
-                        </div>
-                    </fieldset>
-                </section> -->
-                
-                <!-- <section class="Additional">
-                    <fieldset>
-                        <legend>Additional</legend>
-                        <div class="option">
-                            <input type="checkbox" id="chkPistachios" name="Additional" value="pistachios" />
-                            <label for="chkPistachios">Pistachios</label>
-                        </div>
-                    </fieldset>
-                </section> -->
-
             </section>
 
         </section>
 
-        <!-- <input type="submit" value="Submit" id="btnSubmit"> -->
+        <section class="button">
+            <div class="response">
+                <button type="button" id="btnSubmitResponse">Submit Response</button>
+                <button type="button" id="btnClearResponse">Clear Response</button>
+            </div>
 
-        <button type="button"id="btnSubmit">Submit</button>
+            <div class="answer">
+                <button type="button" id="btnRevealAnswers">Reveal Answers</button>
+                <button type="button" id="btnClearAnswers">Clear Answers</button>
+            </div>
+        </section>
+
     </form>
 
     <script src="script/main.js"></script>
