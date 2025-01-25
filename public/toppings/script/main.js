@@ -4,10 +4,10 @@ const btnToppings = document.querySelector('#btnToppings');
 // Reference the btnSubmit element
 const btnSubmit = document.querySelector('#btnSubmit');
 
-// Pizza Style
+// Reference the Pizza Style element
 const elementPizzaStyle = document.querySelector('#pizzaStyle');
 
-// Pizza Name
+// Reference the Pizza Name element
 const elementPizzaName = document.querySelector('#pizzaName');
 
 // Reference the toppingsList element
@@ -22,14 +22,14 @@ let participantAnswerArray = [];
 // Global variable to store de-duped and sorted Pizza Styles
 let sortedUniquePizzaStyles = null;
 
-// Global variable to store de-duped and sorted Pizza Names filtered by Pizza Style
-let sortedUniquePizzaNamesFilteredByPizzaStyle = null;
-
 // Global variable to store de-duped and sorted Pizza Topping Categories
 let sortedUniqueToppingCategories = null;
 
 // Global variable to store de-duped and sorted Pizza Toppings
 let sortedUniquePizzaToppings = null;
+
+// Global variable to store de-duped and sorted Pizza Names filtered by Pizza Style
+let sortedUniquePizzaNamesFilteredByPizzaStyle = null;
 
 // Global variable to store de-duped and sorted Pizza Toppings filtered by Pizza Name
 let sortedUniquePizzaToppingsFilteredByPizzaName = null;
@@ -54,74 +54,11 @@ async function fetchJsonFile() {
         // Parse the JSON content
         let data = await response.json();
 
-        // Assign the data to the global variable 
-        // allToppings = data;
-
-        // // Get Unique data (json, key)
-        // if (allToppings != null) {
-        //     // Get unique and sorted pizza styles
-        //     sortedUniquePizzaStyles = [...new Set(
-        //         allToppings
-        //         .map(item => item.style)
-        //         .sort()
-        //     )];
-            
-        //     // Get the unique Pizza Style
-        //     // pizzaStyle = sortedUniquePizzaStyles[1]; // e.g. "New York Style"
-        //     pizzaStyle = sortedUniquePizzaStyles[0]; // e.g. "Detroit Style"
-
-        //     // Set innerText of Pizza Style element
-        //     elementPizzaStyle.innerText = pizzaStyle;
-
-        //     // Get unique and sorted Pizza Names filtered by Pizza Style
-        //     sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
-        //         allToppings
-        //         .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
-        //         .map(item => item.name)
-        //         .sort()
-        //     )];
-            
-        //     // Get the unique Pizza Name
-        //     // pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[0]; // e.g. "Mt Lumi" ("New York Style")
-        //     pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[3]; // e.g. "The Meatball"
-            
-        //     // Set innerText of Pizza Name element
-        //     elementPizzaName.innerText = pizzaName;
-
-        //     // Get unique and sorted Pizza Toppings filtered by Pizza Name
-        //     sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
-        //         allToppings
-        //         .filter(item => item.name === pizzaName) // e.g. "The Meatball"
-        //         .map(item => item.description)
-        //         .sort()
-        //     )];
-
-        //     // Get unique and sorted Pizza Categories
-        //     sortedUniqueToppingCategories = [...new Set(
-        //         allToppings
-        //         .map(item => item.category)
-        //         .sort()
-        //     )];
-
-        //     // Get unique and sorted Pizza Toppings
-        //     sortedUniquePizzaToppings = [...new Set(
-        //         allToppings
-        //         .map(item => item.description)
-        //         .sort()
-        //     )];
-
-        //     // Create option elenents
-        //     populateOptions(sortedUniquePizzaToppings);
-
-        //     // Create ...
-        //     populateToppingsByCategory(sortedUniqueToppingCategories, sortedUniquePizzaToppings);
-        // }
+        // Disable button
+        btnToppings.disabled = true;
 
         // Process the returned data
         processApiData(data);
-
-        // Disable button
-        btnToppings.disabled = true;
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
@@ -184,8 +121,26 @@ function processApiData (allToppings) {
         // Create option elenents
         populateOptions(sortedUniquePizzaToppings);
 
-        // Create ...
-        populateToppingsByCategory(sortedUniqueToppingCategories, sortedUniquePizzaToppings);
+        // Create "categories" container elements
+        populateCategories(sortedUniqueToppingCategories);
+
+        //Loop thru categories
+        if (sortedUniqueToppingCategories != null) {
+            for (const category of sortedUniqueToppingCategories) {
+                // if (category === 'Cheese' || category === 'Meat') {
+                // }
+                // Get unique and sorted Pizza Toppings filtered by Category
+                let sortedUniquePizzaToppingsFilteredByCategory = [...new Set(
+                    allToppings
+                    .filter(item => item.category === category) // e.g. "Cheese"
+                    .map(item => item.description)
+                    .sort()
+                )];
+
+                // Create "toppings" checkbox elements
+                populateToppingsByCategory(category, sortedUniquePizzaToppingsFilteredByCategory)
+            }
+        }
     }
 }
 
@@ -206,67 +161,75 @@ function populateOptions(jsonArray) {
     }
 }
 
-function createVisualCategories(jsonArray) {
-    // Loop through json objects
-    if (jsonArray != null) {
-        for (let i = 0; i < jsonArray.length; i++) {
-            // Create a new option element
-            let newOption = document.createElement('option');
-        
-            // Set the value and text content of the new option
-            newOption.value = jsonArray[i].topping;
-            newOption.textContent = jsonArray[i].description;
-        
-            // Append the new option to the select element
-            elementSelect.appendChild(newOption);
+function populateCategories(categories) {
+    // Loop through array
+    if (categories != null) {
+        // Reference the categories element
+        let sectionCategories = document.querySelector('.categories');
+
+        for (const category of categories) {
+            // Create a new section element
+            let newSection = document.createElement('section');
+
+            // Create a new fieldset element
+            let newFieldset = document.createElement('fieldset');
+
+            // Create a new legend element
+            let newLegend = document.createElement('legend');
+
+            // Set the class of the new section
+            newSection.className = category;
+
+            // Set the text of the new legend
+            newLegend.textContent = category;
+
+            // Append the new legend to the parent element
+            newFieldset.appendChild(newLegend);
+
+            // Append the new fieldset to the parent element
+            newSection.appendChild(newFieldset);
+
+            // Append the new section to the parent element
+            sectionCategories.appendChild(newSection);
         }
     }
 }
 
-function populateCategories(categories) {
-    
-}
-
-function populateToppingsByCategory(categories, toppings) {
+function populateToppingsByCategory(category, toppings) {
     // Loop through array
-    if (categories != null) {
-        //for (let countCat = 0; countCat < categories.length; countCat++) {
-        for (const category of categories) {
-            let sectionCategory = document.querySelector(`.${category}>fieldset`);
+    if (toppings != null) {
+        // Reference the fieldset as direct descendant of the section (category) element
+        let sectionCategory = document.querySelector(`.${category}>fieldset`);
 
-            //for (const topping of toppings) {
-            for (let countTopping = 0; countTopping < toppings.length; countTopping++) {
-                if (category === 'Cheese' && toppings[countTopping] === 'Piped Ricotta') {
-                    // Create a new div element
-                    let newDiv = document.createElement('div');
+        for (let countTopping = 0; countTopping < toppings.length; countTopping++) {
+            // Create a new div element
+            let newDiv = document.createElement('div');
 
-                    // Create a new option element
-                    let newOption = document.createElement('input');
+            // Create a new option element
+            let newOption = document.createElement('input');
 
-                    // Create a new option label
-                    let newLabel = document.createElement('label');
+            // Create a new option label
+            let newLabel = document.createElement('label');
 
-                    // Set the class of the new div
-                    newDiv.className = "option";
-                    
-                    // Set the name and value of the new option
-                    newOption.type = "checkbox";
-                    newOption.id = `chk${category}${countTopping}`;
-                    newOption.name = category;
-                    newOption.value = toppings[countTopping];
-                    
-                    // Set the "for" value and text content of the new label
-                    newLabel.htmlFor = newOption.id;
-                    newLabel.textContent = toppings[countTopping];
+            // Set the class of the new div
+            newDiv.className = "option";
+            
+            // Set the name and value of the new option
+            newOption.type = "checkbox";
+            newOption.id = `chk${category}${countTopping}`;
+            newOption.name = category;
+            newOption.value = toppings[countTopping];
+            
+            // Set the "for" value and text content of the new label
+            newLabel.htmlFor = newOption.id;
+            newLabel.textContent = toppings[countTopping];
 
-                    // Append the new option and label to the parent element
-                    newDiv.appendChild(newOption);
-                    newDiv.appendChild(newLabel);
+            // Append the new option and label to the parent element
+            newDiv.appendChild(newOption);
+            newDiv.appendChild(newLabel);
 
-                    // Append the new div to the parent element
-                    sectionCategory.appendChild(newDiv);
-                }
-            }
+            // Append the new div to the parent element
+            sectionCategory.appendChild(newDiv);
         }
     }
 }
