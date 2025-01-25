@@ -14,7 +14,7 @@ const elementPizzaName = document.querySelector('#pizzaName');
 const elementSelect = document.querySelector('#toppingsList');
 
 // Global variable to store the fetched data
-let allToppings = null;
+// let allToppings = null;
 
 // Global variable to store user-selected Toppings
 let participantAnswerArray = [];
@@ -55,72 +55,137 @@ async function fetchJsonFile() {
         let data = await response.json();
 
         // Assign the data to the global variable 
-        allToppings = data;
+        // allToppings = data;
 
-        // Get Unique data (json, key)
-        if (allToppings != null) {
-            // Get unique and sorted pizza styles
-            sortedUniquePizzaStyles = [...new Set(
-                allToppings
-                .map(item => item.style)
-                .sort()
-            )];
+        // // Get Unique data (json, key)
+        // if (allToppings != null) {
+        //     // Get unique and sorted pizza styles
+        //     sortedUniquePizzaStyles = [...new Set(
+        //         allToppings
+        //         .map(item => item.style)
+        //         .sort()
+        //     )];
             
-            // Get the unique Pizza Style
-            // pizzaStyle = sortedUniquePizzaStyles[1]; // e.g. "New York Style"
-            pizzaStyle = sortedUniquePizzaStyles[0]; // e.g. "Detroit Style"
+        //     // Get the unique Pizza Style
+        //     // pizzaStyle = sortedUniquePizzaStyles[1]; // e.g. "New York Style"
+        //     pizzaStyle = sortedUniquePizzaStyles[0]; // e.g. "Detroit Style"
 
-            // Set innerText of Pizza Style element
-            elementPizzaStyle.innerText = pizzaStyle;
+        //     // Set innerText of Pizza Style element
+        //     elementPizzaStyle.innerText = pizzaStyle;
 
-            // Get unique and sorted Pizza Names filtered by Pizza Style
-            sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
-                allToppings
-                .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
-                .map(item => item.name)
-                .sort()
-            )];
+        //     // Get unique and sorted Pizza Names filtered by Pizza Style
+        //     sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
+        //         allToppings
+        //         .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
+        //         .map(item => item.name)
+        //         .sort()
+        //     )];
             
-            // Get the unique Pizza Name
-            // pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[0]; // e.g. "Mt Lumi" ("New York Style")
-            pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[3]; // e.g. "The Meatball"
+        //     // Get the unique Pizza Name
+        //     // pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[0]; // e.g. "Mt Lumi" ("New York Style")
+        //     pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[3]; // e.g. "The Meatball"
             
-            // Set innerText of Pizza Name element
-            elementPizzaName.innerText = pizzaName;
+        //     // Set innerText of Pizza Name element
+        //     elementPizzaName.innerText = pizzaName;
 
-            // Get unique and sorted Pizza Toppings filtered by Pizza Name
-            sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
-                allToppings
-                .filter(item => item.name === pizzaName) // e.g. "The Meatball"
-                .map(item => item.description)
-                .sort()
-            )];
+        //     // Get unique and sorted Pizza Toppings filtered by Pizza Name
+        //     sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
+        //         allToppings
+        //         .filter(item => item.name === pizzaName) // e.g. "The Meatball"
+        //         .map(item => item.description)
+        //         .sort()
+        //     )];
 
-            // Get unique and sorted Pizza Categories
-            sortedUniqueToppingCategories = [...new Set(
-                allToppings
-                .map(item => item.category)
-                .sort()
-            )];
+        //     // Get unique and sorted Pizza Categories
+        //     sortedUniqueToppingCategories = [...new Set(
+        //         allToppings
+        //         .map(item => item.category)
+        //         .sort()
+        //     )];
 
-            // Get unique and sorted Pizza Toppings
-            sortedUniquePizzaToppings = [...new Set(
-                allToppings
-                .map(item => item.description)
-                .sort()
-            )];
+        //     // Get unique and sorted Pizza Toppings
+        //     sortedUniquePizzaToppings = [...new Set(
+        //         allToppings
+        //         .map(item => item.description)
+        //         .sort()
+        //     )];
 
-            // Create option elenents
-            populateOptions(sortedUniquePizzaToppings);
+        //     // Create option elenents
+        //     populateOptions(sortedUniquePizzaToppings);
 
-            // Create ...
-            populateToppingsByCategory(sortedUniqueToppingCategories, sortedUniquePizzaToppings);
-        }
+        //     // Create ...
+        //     populateToppingsByCategory(sortedUniqueToppingCategories, sortedUniquePizzaToppings);
+        // }
+
+        // Process the returned data
+        processApiData(data);
 
         // Disable button
         btnToppings.disabled = true;
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
+    }
+}
+
+function processApiData (allToppings) {
+    // Get Unique data (json, key)
+    if (allToppings != null) {
+        // Get unique and sorted pizza styles
+        sortedUniquePizzaStyles = [...new Set(
+            allToppings
+            .map(item => item.style)
+            .sort()
+        )];
+        
+        // Get the unique Pizza Style
+        // pizzaStyle = sortedUniquePizzaStyles[1]; // e.g. "New York Style"
+        pizzaStyle = sortedUniquePizzaStyles[0]; // e.g. "Detroit Style"
+
+        // Set innerText of Pizza Style element
+        elementPizzaStyle.innerText = pizzaStyle;
+
+        // Get unique and sorted Pizza Names filtered by Pizza Style
+        sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
+            allToppings
+            .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
+            .map(item => item.name)
+            .sort()
+        )];
+        
+        // Get the unique Pizza Name
+        // pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[0]; // e.g. "Mt Lumi" ("New York Style")
+        pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[3]; // e.g. "The Meatball"
+        
+        // Set innerText of Pizza Name element
+        elementPizzaName.innerText = pizzaName;
+
+        // Get unique and sorted Pizza Toppings filtered by Pizza Name
+        sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
+            allToppings
+            .filter(item => item.name === pizzaName) // e.g. "The Meatball"
+            .map(item => item.description)
+            .sort()
+        )];
+
+        // Get unique and sorted Pizza Categories
+        sortedUniqueToppingCategories = [...new Set(
+            allToppings
+            .map(item => item.category)
+            .sort()
+        )];
+
+        // Get unique and sorted Pizza Toppings
+        sortedUniquePizzaToppings = [...new Set(
+            allToppings
+            .map(item => item.description)
+            .sort()
+        )];
+
+        // Create option elenents
+        populateOptions(sortedUniquePizzaToppings);
+
+        // Create ...
+        populateToppingsByCategory(sortedUniqueToppingCategories, sortedUniquePizzaToppings);
     }
 }
 
@@ -158,7 +223,10 @@ function createVisualCategories(jsonArray) {
     }
 }
 
-//function populateToppingsByCategory(jsonArray) {
+function populateCategories(categories) {
+    
+}
+
 function populateToppingsByCategory(categories, toppings) {
     // Loop through array
     if (categories != null) {
@@ -169,17 +237,34 @@ function populateToppingsByCategory(categories, toppings) {
             //for (const topping of toppings) {
             for (let countTopping = 0; countTopping < toppings.length; countTopping++) {
                 if (category === 'Cheese' && toppings[countTopping] === 'Piped Ricotta') {
+                    // Create a new div element
+                    let newDiv = document.createElement('div');
+
                     // Create a new option element
                     let newOption = document.createElement('input');
+
+                    // Create a new option label
+                    let newLabel = document.createElement('label');
+
+                    // Set the class of the new div
+                    newDiv.className = "option";
                     
-                    // Set the value and text content of the new option
+                    // Set the name and value of the new option
                     newOption.type = "checkbox";
                     newOption.id = `chk${category}${countTopping}`;
-                    newOption.name = toppings[countTopping];
-                    newOption.value = 0;
+                    newOption.name = category;
+                    newOption.value = toppings[countTopping];
                     
-                    // Append the new option to the select element
-                    sectionCategory.appendChild(newOption);
+                    // Set the "for" value and text content of the new label
+                    newLabel.htmlFor = newOption.id;
+                    newLabel.textContent = toppings[countTopping];
+
+                    // Append the new option and label to the parent element
+                    newDiv.appendChild(newOption);
+                    newDiv.appendChild(newLabel);
+
+                    // Append the new div to the parent element
+                    sectionCategory.appendChild(newDiv);
                 }
             }
         }

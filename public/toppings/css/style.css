@@ -11,13 +11,19 @@
 }
 
 .categories {
-    margin: 2%;
+    /* margin: 2%; */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 .categories section {
-    margin: 1%;
+    /* margin: 1%; */
     width: 33.33%;
+}
+
+.categories section fieldset {
+    /* border: 3px solid purple; */
+    display: flex;
+    flex-direction: column;
 }
