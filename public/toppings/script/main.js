@@ -19,8 +19,8 @@ const btnClearResponse = document.querySelector('#btnClearResponse');
 // Reference the btnRevealAnswers element
 const btnRevealAnswers = document.querySelector('#btnRevealAnswers');
 
-// Reference the btnClearAnswers element
-const btnClearAnswers = document.querySelector('#btnClearAnswers');
+// Reference the btnHideAnswers element
+const btnHideAnswers = document.querySelector('#btnHideAnswers');
 
 // Global variable to store the fetched data
 let allToppings = null;
@@ -282,8 +282,7 @@ function submitResponse() {
         })
 
         // // Did we select all of the appropriate toppings?
-        // identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? console.log('Correct!') : console.log('Try again... ☹')
-        participantAnswerArray.length === identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? alert('Correct!') : alert('Try again... ☹')
+        participantAnswerArray.length === identifiedToppingsCount && identifiedToppingsCount === sortedUniquePizzaToppingsFilteredByPizzaName.length ? alert('Correct!') : alert('Try again... ☹')
     }
 }
 
@@ -324,7 +323,7 @@ function revealAnswers() {
     }
 }
 
-function clearAnswers() {
+function hideAnswers() {
     // Get data
     if (allToppings != null) {
         // Name of Pizza
@@ -362,4 +361,4 @@ btnClearResponse.addEventListener('click', clearResponse);
 btnRevealAnswers.addEventListener('click', revealAnswers);
 
 // Clear correct answers
-btnClearAnswers.addEventListener('click', clearAnswers);
+btnHideAnswers.addEventListener('click', hideAnswers);
