@@ -121,7 +121,7 @@ function processApiData () {
         // Get unique and sorted Pizza Categories
         sortedUniqueToppingCategories = [...new Set(
             allToppings
-            .sort((a, b) => a.order - b.order)
+            .sort((a, b) => a.categoryIndex - b.categoryIndex)
             .map(item => item.category)
             // .sort()
         )];
