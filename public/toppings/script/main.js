@@ -1,5 +1,5 @@
-// Reference the btnToppings element
-const btnToppings = document.querySelector('#btnToppings');
+// Reference the btnLoadToppings element
+const btnLoadToppings = document.querySelector('#btnLoadToppings');
 
 // Reference the btnSubmitResponse element
 const btnSubmitResponse = document.querySelector('#btnSubmitResponse');
@@ -58,7 +58,7 @@ async function fetchJsonFile() {
         allToppings = JSON.parse(JSON.stringify(data));
 
         // Disable button
-        btnToppings.disabled = true;
+        // btnLoadToppings.disabled = true;
 
         // Process the returned data
         processApiData(data);
@@ -69,6 +69,8 @@ async function fetchJsonFile() {
 
 function processApiData () {
     // Remove all child nodes
+    removeAllChildrenOfType('containerPizzaCategories', 'fieldset');
+    removeAllChildrenOfType('containerPizzaNames', 'fieldset');
     removeAllChildrenOfType('containerPizzaStyles', 'fieldset');
 
     // Get data
@@ -213,8 +215,6 @@ function clickPizzaStylesRadioButton(style) {
     
     // Remove all child nodes
     removeAllChildrenOfType('containerPizzaCategories', 'fieldset');
-
-    // Remove all child nodes
     removeAllChildrenOfType('containerPizzaNames', 'fieldset');
 
     if (allToppings != null) {
@@ -348,7 +348,7 @@ function hideAnswers() {
 }
 
 // Retrieve JSON data
-btnToppings.addEventListener('click', fetchJsonFile);
+btnLoadToppings.addEventListener('click', fetchJsonFile);
 
 // Check my responses (answers)
 btnSubmitResponse.addEventListener('click', submitResponse);
