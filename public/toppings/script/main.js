@@ -305,6 +305,37 @@ function createElementsForPizzaCategories(categories) {
     }
 }
 
+function createContainerElement(containerID, className) {
+    // Reference the categories element
+    // let container = document.querySelector(`#containerPizzaCategories`);
+    let container = document.querySelector(`#${containerID}`);
+
+    // Create a new section element
+    let newSection = document.createElement('section');
+
+    // Create a new fieldset element
+    let newFieldset = document.createElement('fieldset');
+
+    // Create a new legend element
+    let newLegend = document.createElement('legend');
+
+    // Set the class of the new section
+    newSection.className = category;
+
+    // Set the text of the new legend
+    newLegend.textContent = category;
+
+    // Append the new legend to the parent element
+    newFieldset.appendChild(newLegend);
+
+    // Append the new fieldset to the parent element
+    newSection.appendChild(newFieldset);
+
+    // Append the new section to the parent element
+    container.appendChild(newSection);
+    
+}
+
 function createElementsForPizzaToppingsByCategories(category, toppings) {
     // Loop through array
     if (toppings != null) {
