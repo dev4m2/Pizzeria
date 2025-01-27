@@ -247,8 +247,11 @@ function constructPizzaCategoriesAndToppings(name) {
             .sort()
         )];
 
+        // Remove all child nodes
+        removeAllChildrenOfType('containerPizzaCategories', 'fieldset');
+
         // Create Pizza Topping "categories" group elements
-        createElementsForPizzaCategories(sortedUniquePizzaToppingCategories);
+        // createElementsForPizzaCategories(sortedUniquePizzaToppingCategories);
 
         //Loop thru Pizza Topping Categories
         if (sortedUniquePizzaToppingCategories != null) {
@@ -262,7 +265,8 @@ function constructPizzaCategoriesAndToppings(name) {
                 )];
 
                 // Create "toppings" checkbox elements
-                createElementsForPizzaToppingsByCategories(category, sortedUniquePizzaToppingsFilteredByCategory)
+                // createElementsForPizzaToppingsByCategories(category, sortedUniquePizzaToppingsFilteredByCategory)
+                createContainerElement(sortedUniquePizzaToppingsFilteredByCategory, 'containerPizzaCategories', category, category, 'checkbox');
             }
         }
     }
@@ -299,29 +303,71 @@ function createElementsForPizzaCategories(categories) {
     }
 }
 
-function createContainerElement(containerID, className) {
-    // Reference the categories element
-    // let container = document.querySelector(`#containerPizzaCategories`);
-    let container = document.querySelector(`#${containerID}`);
+function createContainerElement(arrPizzaItems, containerID, className, legendTitle, elementType) {
+    // example: 
+    // arrPizzaItems = sortedUniquePizzaStyles;
+    // containerID = "containerPizzaStyles";
+    // className = "pizzaStyle";
+    // legendTitle = "Pizza Style";
+    // elementType = "radio";
 
-    // Create a new fieldset element
-    let newFieldset = document.createElement('fieldset');
+    // Loop through array
+    if (arrPizzaItems != null) {
+        // Reference the categories element
+        let container = document.querySelector(`#${containerID}`);
 
-    // Create a new legend element
-    let newLegend = document.createElement('legend');
+        // Create a new fieldset element
+        let newFieldset = document.createElement('fieldset');
 
-    // Set the class of the new fieldset
-    newFieldset.className = category;
+        // Create a new legend element
+        let newLegend = document.createElement('legend');
 
-    // Set the text of the new legend
-    newLegend.textContent = category;
+        // Set the class of the new fieldset
+        newFieldset.className = className;
 
-    // Append the new legend to the parent element
-    newFieldset.appendChild(newLegend);
+        // Set the text of the new legend
+        newLegend.textContent = legendTitle;
 
-    // Append the new fieldset to the parent element
-    container.appendChild(newFieldset);
-    
+        // Append the new legend to the parent element
+        newFieldset.appendChild(newLegend);
+
+        // Append the new fieldset to the parent element
+        container.appendChild(newFieldset);
+
+        // Reference the fieldset as direct descendant of the container element
+        let fieldSetNode = document.querySelector(`.${className}`);
+
+        for (let i = 0; i < arrPizzaItems.length; i++) {
+            // Create a new div element
+            let newDiv = document.createElement('div');
+
+            // Create a new option element
+            let newOption = document.createElement('input');
+
+            // Create a new option label
+            let newLabel = document.createElement('label');
+
+            // Set the class of the new div
+            newDiv.className = "option";
+
+            // Set the name and value of the new option
+            newOption.type = elementType; // "radio"
+            newOption.id = `${className}${i}`; // "pizzaStyle2"
+            newOption.name = className; // "pizzaStyle"
+            newOption.value = arrPizzaItems[i]; // "New York Style"
+            
+            // Set the "for" value and text content of the new label
+            newLabel.htmlFor = newOption.id;
+            newLabel.textContent = arrPizzaItems[i];
+
+            // Append the new option and label to the parent element
+            newDiv.appendChild(newOption);
+            newDiv.appendChild(newLabel);
+
+            // Append the new div to the parent element
+            fieldSetNode.appendChild(newDiv);
+        }
+    }
 }
 
 function createElementsForPizzaToppingsByCategories(category, toppings) {
