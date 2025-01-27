@@ -1,24 +1,16 @@
-#toppingsList {
-    height: 600px;
-}
-
-.container {
-    display: flex;
-}
-
-#pizzaCategories {
+#containerPizzaCategories {
     /* margin: 2%; */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-#pizzaCategories section {
+#containerPizzaCategories section {
     /* margin: 1%; */
     width: 33.33%;
 }
 
-#pizzaCategories section fieldset {
+#containerPizzaCategories section fieldset {
     /* border: 3px solid purple; */
     display: flex;
     flex-direction: column;

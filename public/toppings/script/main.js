@@ -166,7 +166,7 @@ function createElementsForPizzaStyles(styles) {
 
 function createElementsForPizzaNames(names) {
     // Remove all child nodes
-    removeAllChildrenOfType('pizzaCategories', 'section');
+    removeAllChildrenOfType('containerPizzaCategories', 'section');
 
     // Remove all child nodes
     removeAllChildrenOfType('pizzaNames', 'fieldset');
@@ -270,12 +270,12 @@ function constructPizzaCategoriesAndToppings(name) {
 
 function createElementsForPizzaCategories(categories) {
     // Remove all child nodes
-    removeAllChildrenOfType('pizzaCategories', 'section');
+    removeAllChildrenOfType('containerPizzaCategories', 'section');
 
     // Loop through array
     if (categories != null) {
         // Reference the categories element
-        let sectionCategories = document.querySelector('#pizzaCategories');
+        let sectionCategories = document.querySelector('#containerPizzaCategories');
 
         for (const category of categories) {
             // Create a new section element
@@ -390,7 +390,7 @@ function submitResponse() {
         participantAnswerArray.length = 0;
 
         // Get all checkboxes on the page
-        const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
         // Filter checked checkboxes
         const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
@@ -413,7 +413,7 @@ function submitResponse() {
 
 function clearResponse() {
     // Get all checkboxes on the page
-    const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
     // Filter checked checkboxes
     const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
@@ -427,10 +427,10 @@ function revealAnswers() {
     // Get data
     if (allToppings != null) {
         // Get all checkboxes on the page
-        const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
         // Get all labels on the page
-        const labels = document.querySelectorAll('#pizzaCategories label');
+        const labels = document.querySelectorAll('#containerPizzaCategories label');
 
         // Compare toppings selected with actual pizza
         sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
@@ -449,10 +449,10 @@ function hideAnswers() {
     // Get data
     if (allToppings != null) {
         // Get all checkboxes on the page
-        const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
         // Get all labels on the page
-        const labels = document.querySelectorAll('#pizzaCategories label');
+        const labels = document.querySelectorAll('#containerPizzaCategories label');
 
         // Compare toppings selected with actual pizza
         sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
