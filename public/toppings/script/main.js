@@ -5,7 +5,7 @@
 // const elementPizzaName = document.querySelector('#pizzaName');
 
 // Reference the toppingsList element
-const elementSelect = document.querySelector('#toppingsList');
+// const elementSelect = document.querySelector('#toppingsList');
 
 // Reference the btnToppings element
 const btnToppings = document.querySelector('#btnToppings');
@@ -90,23 +90,6 @@ function processApiData () {
 
         // Create "styles" container and option elements
         populatePizzaStyles(sortedUniquePizzaStyles);
-    }
-}
-
-function populateOptions(jsonArray) {
-    // Loop through json array
-    if (jsonArray != null) {
-        for (let i = 0; i < jsonArray.length; i++) {
-            // Create a new option element
-            let newOption = document.createElement('option');
-        
-            // Set the value and text content of the new option
-            newOption.value = jsonArray[i];
-            newOption.textContent = jsonArray[i];
-        
-            // Append the new option to the select element
-            elementSelect.appendChild(newOption);
-        }
     }
 }
 
@@ -366,9 +349,6 @@ function doSomething(name) {
             .map(item => item.description)
             .sort()
         )];
-
-        // Create option elenents
-        // populateOptions(sortedUniquePizzaToppings);
 
         // Create "categories" container elements
         populateCategories(sortedUniqueToppingCategories);
