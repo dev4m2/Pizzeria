@@ -224,77 +224,7 @@ function populatePizzaNames(names) {
     }
 }
 
-function clickStylesRadioButton(style) {
-    console.log("Selected pizza style:", style);
-    
-    if (allToppings != null) {
-        // Get unique and sorted Pizza Names filtered by Pizza Style
-        sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
-            allToppings
-            .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
-            .map(item => item.name)
-            .sort()
-        )];
-        
-        populatePizzaNames(sortedUniquePizzaNamesFilteredByPizzaStyle);
-    }
-}
-
-function clickNamesRadioButton(name) {
-    console.log("Selected pizza name:", name);
-    
-    if (allToppings != null) {
-        populatePizzaCategoriesAndToppings(name);
-    }
-}
-
-function populatePizzaCategoriesAndToppings(name) {
-    if (allToppings != null) {
-        // Get unique and sorted Pizza Toppings filtered by Pizza Name
-        sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
-            allToppings
-            .filter(item => item.name === name) // e.g. "The Meatball"
-            .map(item => item.description)
-            .sort()
-        )];
-
-        // Get unique and sorted Pizza Categories
-        sortedUniqueToppingCategories = [...new Set(
-            allToppings
-            .sort((a, b) => a.categoryIndex - b.categoryIndex)
-            .map(item => item.category)
-            // .sort()
-        )];
-
-        // Get unique and sorted Pizza Toppings
-        sortedUniquePizzaToppings = [...new Set(
-            allToppings
-            .map(item => item.description)
-            .sort()
-        )];
-
-        // Create "categories" container elements
-        populateCategories(sortedUniqueToppingCategories);
-
-        //Loop thru categories
-        if (sortedUniqueToppingCategories != null) {
-            for (const category of sortedUniqueToppingCategories) {
-                // Get unique and sorted Pizza Toppings filtered by Category
-                let sortedUniquePizzaToppingsFilteredByCategory = [...new Set(
-                    allToppings
-                    .filter(item => item.category === category) // e.g. "Cheese"
-                    .map(item => item.description)
-                    .sort()
-                )];
-
-                // Create "toppings" checkbox elements
-                populateToppingsByCategory(category, sortedUniquePizzaToppingsFilteredByCategory)
-            }
-        }
-    }
-}
-
-function populateCategories(categories) {
+function populatePizzaCategories(categories) {
     // Remove all child nodes
     removeAllChildrenOfType('pizzaCategories', 'section');
 
@@ -331,7 +261,53 @@ function populateCategories(categories) {
     }
 }
 
-function populateToppingsByCategory(category, toppings) {
+function populatePizzaCategoriesAndToppings(name) {
+    if (allToppings != null) {
+        // Get unique and sorted Pizza Toppings filtered by Pizza Name
+        sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
+            allToppings
+            .filter(item => item.name === name) // e.g. "The Meatball"
+            .map(item => item.description)
+            .sort()
+        )];
+
+        // Get unique and sorted Pizza Categories
+        sortedUniqueToppingCategories = [...new Set(
+            allToppings
+            .sort((a, b) => a.categoryIndex - b.categoryIndex)
+            .map(item => item.category)
+            // .sort()
+        )];
+
+        // Get unique and sorted Pizza Toppings
+        sortedUniquePizzaToppings = [...new Set(
+            allToppings
+            .map(item => item.description)
+            .sort()
+        )];
+
+        // Create "categories" container elements
+        populatePizzaCategories(sortedUniqueToppingCategories);
+
+        //Loop thru categories
+        if (sortedUniqueToppingCategories != null) {
+            for (const category of sortedUniqueToppingCategories) {
+                // Get unique and sorted Pizza Toppings filtered by Category
+                let sortedUniquePizzaToppingsFilteredByCategory = [...new Set(
+                    allToppings
+                    .filter(item => item.category === category) // e.g. "Cheese"
+                    .map(item => item.description)
+                    .sort()
+                )];
+
+                // Create "toppings" checkbox elements
+                populatePizzaToppingsByCategories(category, sortedUniquePizzaToppingsFilteredByCategory)
+            }
+        }
+    }
+}
+
+function populatePizzaToppingsByCategories(category, toppings) {
     // Loop through array
     if (toppings != null) {
         // Reference the fieldset as direct descendant of the section (category) element
@@ -367,6 +343,30 @@ function populateToppingsByCategory(category, toppings) {
             // Append the new div to the parent element
             sectionCategory.appendChild(newDiv);
         }
+    }
+}
+
+function clickStylesRadioButton(style) {
+    console.log("Selected pizza style:", style);
+    
+    if (allToppings != null) {
+        // Get unique and sorted Pizza Names filtered by Pizza Style
+        sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
+            allToppings
+            .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
+            .map(item => item.name)
+            .sort()
+        )];
+        
+        populatePizzaNames(sortedUniquePizzaNamesFilteredByPizzaStyle);
+    }
+}
+
+function clickNamesRadioButton(name) {
+    console.log("Selected pizza name:", name);
+    
+    if (allToppings != null) {
+        populatePizzaCategoriesAndToppings(name);
     }
 }
 
