@@ -166,7 +166,6 @@ function createElementsForPizzaStyles(styles) {
 
 function createElementsForPizzaNames(names) {
     // Remove all child nodes
-    // removeAllChildrenOfType('containerPizzaCategories', 'section');
     removeAllChildrenOfType('containerPizzaCategories', 'fieldset');
 
     // Remove all child nodes
@@ -271,7 +270,6 @@ function constructPizzaCategoriesAndToppings(name) {
 
 function createElementsForPizzaCategories(categories) {
     // Remove all child nodes
-    // removeAllChildrenOfType('containerPizzaCategories', 'section');
     removeAllChildrenOfType('containerPizzaCategories', 'fieldset');
 
     // Loop through array
@@ -280,19 +278,13 @@ function createElementsForPizzaCategories(categories) {
         let sectionCategories = document.querySelector('#containerPizzaCategories');
 
         for (const category of categories) {
-            // Create a new section element
-            // let newSection = document.createElement('section');
-
             // Create a new fieldset element
             let newFieldset = document.createElement('fieldset');
 
             // Create a new legend element
             let newLegend = document.createElement('legend');
 
-            // Set the class of the new section
-            // newSection.className = category;
-
-            // Set the class of the new section
+            // Set the class of the new element
             newFieldset.className = category;
 
             // Set the text of the new legend
@@ -300,12 +292,6 @@ function createElementsForPizzaCategories(categories) {
 
             // Append the new legend to the parent element
             newFieldset.appendChild(newLegend);
-
-            // Append the new fieldset to the parent element
-            // newSection.appendChild(newFieldset);
-
-            // Append the new section to the parent element
-            // sectionCategories.appendChild(newSection);
 
             // Append the new fieldset to the parent element
             sectionCategories.appendChild(newFieldset);
@@ -318,17 +304,14 @@ function createContainerElement(containerID, className) {
     // let container = document.querySelector(`#containerPizzaCategories`);
     let container = document.querySelector(`#${containerID}`);
 
-    // Create a new section element
-    let newSection = document.createElement('section');
-
     // Create a new fieldset element
     let newFieldset = document.createElement('fieldset');
 
     // Create a new legend element
     let newLegend = document.createElement('legend');
 
-    // Set the class of the new section
-    newSection.className = category;
+    // Set the class of the new fieldset
+    newFieldset.className = category;
 
     // Set the text of the new legend
     newLegend.textContent = category;
@@ -337,21 +320,15 @@ function createContainerElement(containerID, className) {
     newFieldset.appendChild(newLegend);
 
     // Append the new fieldset to the parent element
-    newSection.appendChild(newFieldset);
-
-    // Append the new section to the parent element
-    container.appendChild(newSection);
+    container.appendChild(newFieldset);
     
 }
 
 function createElementsForPizzaToppingsByCategories(category, toppings) {
     // Loop through array
     if (toppings != null) {
-        // Reference the fieldset as direct descendant of the section (category) element
-        // let sectionCategory = document.querySelector(`.${category}>fieldset`);
-
         // Reference the class category (fieldset) element
-        let sectionCategory = document.querySelector(`.${category}`);
+        let elementCategory = document.querySelector(`.${category}`);
 
         for (let countTopping = 0; countTopping < toppings.length; countTopping++) {
             // Create a new div element
@@ -381,7 +358,7 @@ function createElementsForPizzaToppingsByCategories(category, toppings) {
             newDiv.appendChild(newLabel);
 
             // Append the new div to the parent element
-            sectionCategory.appendChild(newDiv);
+            elementCategory.appendChild(newDiv);
         }
     }
 }
