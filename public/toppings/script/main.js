@@ -92,7 +92,7 @@ function processApiData () {
             .sort()
         )];
 
-        // Create "styles" container and option elements
+        // Create "styles" group and option elements
         createElementsForPizzaStyles(sortedUniquePizzaStyles);
     }
 }
@@ -247,7 +247,7 @@ function constructPizzaCategoriesAndToppings(name) {
             .sort()
         )];
 
-        // Create Pizza Topping "categories" container elements
+        // Create Pizza Topping "categories" group elements
         createElementsForPizzaCategories(sortedUniquePizzaToppingCategories);
 
         //Loop thru Pizza Topping Categories
