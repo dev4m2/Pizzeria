@@ -101,7 +101,7 @@ function createElementsForPizzaStyles(styles) {
     // Loop through array
     if (styles != null) {
         // Reference the styles element
-        let sectionStyles = document.querySelector('#pizzaStyles');
+        let sectionStyles = document.querySelector('#containerPizzaStyles');
 
         // Create a new fieldset element
         let newFieldset = document.createElement('fieldset');
@@ -119,7 +119,7 @@ function createElementsForPizzaStyles(styles) {
         sectionStyles.appendChild(newFieldset);
 
         // Reference the fieldset as direct descendant of the section (category) element
-        let sectionStyle = document.querySelector(`#pizzaStyles>fieldset`);
+        let sectionStyle = document.querySelector(`#containerPizzaStyles>fieldset`);
 
         for (const style of styles) {
             // Create a new div element
