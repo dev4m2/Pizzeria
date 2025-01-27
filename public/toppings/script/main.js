@@ -351,7 +351,7 @@ function clickStylesRadioButton(style) {
         // Get unique and sorted Pizza Names filtered by Pizza Style
         sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
             allToppings
-            .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
+            .filter(item => item.style === style) // e.g. "Detroit Style"
             .map(item => item.name)
             .sort()
         )];
