@@ -23,7 +23,7 @@ let participantAnswerArray = [];
 let sortedUniquePizzaStyles = null;
 
 // Global variable to store de-duped and sorted Pizza Topping Categories
-let sortedUniqueToppingCategories = null;
+let sortedUniquePizzaToppingCategories = null;
 
 // Global variable to store de-duped and sorted Pizza Toppings
 let sortedUniquePizzaToppings = null;
@@ -77,8 +77,8 @@ function processApiData () {
             .sort()
         )];
 
-        // Get unique and sorted Pizza Categories
-        sortedUniqueToppingCategories = [...new Set(
+        // Get unique and sorted Pizza Topping Categories
+        sortedUniquePizzaToppingCategories = [...new Set(
             allToppings
             .sort((a, b) => a.categoryIndex - b.categoryIndex)
             .map(item => item.category)
@@ -93,11 +93,11 @@ function processApiData () {
         )];
 
         // Create "styles" container and option elements
-        populatePizzaStyles(sortedUniquePizzaStyles);
+        createElementsForPizzaStyles(sortedUniquePizzaStyles);
     }
 }
 
-function populatePizzaStyles(styles) {
+function createElementsForPizzaStyles(styles) {
     // Loop through array
     if (styles != null) {
         // Reference the styles element
@@ -158,14 +158,13 @@ function populatePizzaStyles(styles) {
                 pizzaStyle = this.value;
 
                 // Call event handler
-                // clickStylesRadioButton(this.value);
                 clickStylesRadioButton(pizzaStyle);
             });
         });
     }
 }
 
-function populatePizzaNames(names) {
+function createElementsForPizzaNames(names) {
     // Remove all child nodes
     removeAllChildrenOfType('pizzaCategories', 'section');
 
@@ -232,14 +231,13 @@ function populatePizzaNames(names) {
                 pizzaName = this.value;
 
                 // Call event handler
-                // clickNamesRadioButton(this.value);
                 clickNamesRadioButton(pizzaName);
             });
         });
     }
 }
 
-function populatePizzaCategoriesAndToppings(name) {
+function constructPizzaCategoriesAndToppings(name) {
     if (allToppings != null) {
         // Get unique and sorted Pizza Toppings filtered by Pizza Name
         sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
@@ -249,12 +247,12 @@ function populatePizzaCategoriesAndToppings(name) {
             .sort()
         )];
 
-        // Create "categories" container elements
-        populatePizzaCategories(sortedUniqueToppingCategories);
+        // Create Pizza Topping "categories" container elements
+        createElementsForPizzaCategories(sortedUniquePizzaToppingCategories);
 
-        //Loop thru categories
-        if (sortedUniqueToppingCategories != null) {
-            for (const category of sortedUniqueToppingCategories) {
+        //Loop thru Pizza Topping Categories
+        if (sortedUniquePizzaToppingCategories != null) {
+            for (const category of sortedUniquePizzaToppingCategories) {
                 // Get unique and sorted Pizza Toppings filtered by Category
                 let sortedUniquePizzaToppingsFilteredByCategory = [...new Set(
                     allToppings
@@ -264,13 +262,13 @@ function populatePizzaCategoriesAndToppings(name) {
                 )];
 
                 // Create "toppings" checkbox elements
-                populatePizzaToppingsByCategories(category, sortedUniquePizzaToppingsFilteredByCategory)
+                createElementsForPizzaToppingsByCategories(category, sortedUniquePizzaToppingsFilteredByCategory)
             }
         }
     }
 }
 
-function populatePizzaCategories(categories) {
+function createElementsForPizzaCategories(categories) {
     // Remove all child nodes
     removeAllChildrenOfType('pizzaCategories', 'section');
 
@@ -307,7 +305,7 @@ function populatePizzaCategories(categories) {
     }
 }
 
-function populatePizzaToppingsByCategories(category, toppings) {
+function createElementsForPizzaToppingsByCategories(category, toppings) {
     // Loop through array
     if (toppings != null) {
         // Reference the fieldset as direct descendant of the section (category) element
@@ -358,7 +356,7 @@ function clickStylesRadioButton(style) {
             .sort()
         )];
         
-        populatePizzaNames(sortedUniquePizzaNamesFilteredByPizzaStyle);
+        createElementsForPizzaNames(sortedUniquePizzaNamesFilteredByPizzaStyle);
     }
 }
 
@@ -366,7 +364,7 @@ function clickNamesRadioButton(name) {
     console.log("Selected pizza name:", name);
     
     if (allToppings != null) {
-        populatePizzaCategoriesAndToppings(name);
+        constructPizzaCategoriesAndToppings(name);
     }
 }
 
