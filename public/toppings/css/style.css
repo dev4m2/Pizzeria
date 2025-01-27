@@ -1,3 +1,8 @@
+/* Box Model Hack */
+*{
+    box-sizing: border-box;
+}
+
 #containerPizzaCategories {
     /* margin: 2%; */
     display: flex;
@@ -7,13 +12,19 @@
 
 #containerPizzaCategories section {
     /* margin: 1%; */
-    width: 33.33%;
+    /* width: 33.33%; */
 }
 
 #containerPizzaCategories section fieldset {
     /* border: 3px solid purple; */
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+#containerPizzaCategories fieldset {
+    border: 3px solid purple;
+    /* margin: 1%; */
+    width: 30%;
 }
 
 .button {

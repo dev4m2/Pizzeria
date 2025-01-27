@@ -166,7 +166,8 @@ function createElementsForPizzaStyles(styles) {
 
 function createElementsForPizzaNames(names) {
     // Remove all child nodes
-    removeAllChildrenOfType('containerPizzaCategories', 'section');
+    // removeAllChildrenOfType('containerPizzaCategories', 'section');
+    removeAllChildrenOfType('containerPizzaCategories', 'fieldset');
 
     // Remove all child nodes
     removeAllChildrenOfType('containerPizzaNames', 'fieldset');
@@ -270,7 +271,8 @@ function constructPizzaCategoriesAndToppings(name) {
 
 function createElementsForPizzaCategories(categories) {
     // Remove all child nodes
-    removeAllChildrenOfType('containerPizzaCategories', 'section');
+    // removeAllChildrenOfType('containerPizzaCategories', 'section');
+    removeAllChildrenOfType('containerPizzaCategories', 'fieldset');
 
     // Loop through array
     if (categories != null) {
@@ -279,7 +281,7 @@ function createElementsForPizzaCategories(categories) {
 
         for (const category of categories) {
             // Create a new section element
-            let newSection = document.createElement('section');
+            // let newSection = document.createElement('section');
 
             // Create a new fieldset element
             let newFieldset = document.createElement('fieldset');
@@ -288,7 +290,10 @@ function createElementsForPizzaCategories(categories) {
             let newLegend = document.createElement('legend');
 
             // Set the class of the new section
-            newSection.className = category;
+            // newSection.className = category;
+
+            // Set the class of the new section
+            newFieldset.className = category;
 
             // Set the text of the new legend
             newLegend.textContent = category;
@@ -297,10 +302,13 @@ function createElementsForPizzaCategories(categories) {
             newFieldset.appendChild(newLegend);
 
             // Append the new fieldset to the parent element
-            newSection.appendChild(newFieldset);
+            // newSection.appendChild(newFieldset);
 
             // Append the new section to the parent element
-            sectionCategories.appendChild(newSection);
+            // sectionCategories.appendChild(newSection);
+
+            // Append the new fieldset to the parent element
+            sectionCategories.appendChild(newFieldset);
         }
     }
 }
@@ -340,7 +348,10 @@ function createElementsForPizzaToppingsByCategories(category, toppings) {
     // Loop through array
     if (toppings != null) {
         // Reference the fieldset as direct descendant of the section (category) element
-        let sectionCategory = document.querySelector(`.${category}>fieldset`);
+        // let sectionCategory = document.querySelector(`.${category}>fieldset`);
+
+        // Reference the class category (fieldset) element
+        let sectionCategory = document.querySelector(`.${category}`);
 
         for (let countTopping = 0; countTopping < toppings.length; countTopping++) {
             // Create a new div element
