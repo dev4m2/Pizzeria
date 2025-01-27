@@ -100,15 +100,55 @@ function processApiData () {
         // Create "styles" group and option elements
         createContainerElement(sortedUniquePizzaStyles, 'containerPizzaStyles', 'pizzaStyle', 'Pizza Style', 'radio');
 
-        document.querySelectorAll('input[name="pizzaStyle"]').forEach(radio => {
-            radio.addEventListener('click', function() {
-                // Set global variable
-                pizzaStyle = this.value;
+        // Get random index
+        let randomIndex = Math.floor(Math.random() * sortedUniquePizzaStyles.length + 1); // 1-3 ???
 
-                // Call event handler
-                clickPizzaStylesRadioButton(pizzaStyle);
+        // Identify checkbox element
+        const chkRandomPizzaStyle = document.querySelector('#chkRandomPizzaStyle');
+
+        // Identify fieldset element
+        const fieldsetPizzaStyle = document.querySelector('.pizzaStyle');
+
+        // Enable fieldset
+        fieldsetPizzaStyle.disabled = false;
+
+        if (chkRandomPizzaStyle.checked) {
+            // Disable fieldset
+            fieldsetPizzaStyle.disabled = true;
+
+            // Get unique and sorted Pizza Toppings filtered by Pizza Name
+            let sortedUniquePizzaStylesFilteredByStyleIndex = [...new Set(
+                allToppings
+                .filter(item => item.styleIndex === randomIndex) // e.g. "1 - New York Style" (toppings.json list "styleIndex" is 1-3)
+                .map(item => item.style)
+                .sort()
+            )];
+
+            // return Pizza Style
+            pizzaStyle = sortedUniquePizzaStylesFilteredByStyleIndex[0]; // first item in the returned array (ex. "New York Style")
+            
+            // Get all radio buttons in this container
+            const radioButtons = document.querySelectorAll('#containerPizzaStyles input[type="radio"]');
+
+            // Filter radio buttons for selected pizza style
+            const radioPizzaStyle = Array.from(radioButtons).filter(radio => radio.value === pizzaStyle);
+
+            // Select radio button
+            radioPizzaStyle[0].checked = true; // first item in the returned array
+
+            clickPizzaStylesRadioButton(pizzaStyle);
+        }
+        else {
+            document.querySelectorAll('input[name="pizzaStyle"]').forEach(radio => {
+                radio.addEventListener('click', function() {
+                    // Set global variable
+                    pizzaStyle = this.value;
+    
+                    // Call event handler
+                    clickPizzaStylesRadioButton(pizzaStyle);
+                });
             });
-        });
+        }
     }
 }
 
@@ -269,7 +309,7 @@ function submitResponse() {
         // Clear array
         participantAnswerArray.length = 0;
 
-        // Get all checkboxes on the page
+        // Get all checkboxes in this container
         const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
         // Filter checked checkboxes
@@ -292,7 +332,7 @@ function submitResponse() {
 }
 
 function clearResponse() {
-    // Get all checkboxes on the page
+    // Get all checkboxes in this container
     const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
     // Filter checked checkboxes
@@ -306,7 +346,7 @@ function clearResponse() {
 function revealAnswers() {
     // Get data
     if (allToppings != null) {
-        // Get all checkboxes on the page
+        // Get all checkboxes in this container
         const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
         // Get all labels on the page
@@ -328,7 +368,7 @@ function revealAnswers() {
 function hideAnswers() {
     // Get data
     if (allToppings != null) {
-        // Get all checkboxes on the page
+        // Get all checkboxes in this container
         const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
         // Get all labels on the page
