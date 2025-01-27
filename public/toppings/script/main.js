@@ -1,8 +1,8 @@
 // Reference the Pizza Style element
-const elementPizzaStyle = document.querySelector('#pizzaStyle');
+// const elementPizzaStyle = document.querySelector('#pizzaStyle');
 
 // Reference the Pizza Name element
-const elementPizzaName = document.querySelector('#pizzaName');
+// const elementPizzaName = document.querySelector('#pizzaName');
 
 // Reference the toppingsList element
 const elementSelect = document.querySelector('#toppingsList');
@@ -44,10 +44,12 @@ let sortedUniquePizzaNamesFilteredByPizzaStyle = null;
 let sortedUniquePizzaToppingsFilteredByPizzaName = null;
 
 // Style of Pizza
-let pizzaStyle = elementPizzaStyle.innerText;
+// let pizzaStyle = elementPizzaStyle.innerText;
+let pizzaStyle = '';
 
 // Name of Pizza
-let pizzaName = elementPizzaName.innerText;
+// let pizzaName = elementPizzaName.innerText;
+let pizzaName = '';
 
 // Function to fetch the JSON file and read its contents
 async function fetchJsonFile() {
@@ -85,14 +87,237 @@ function processApiData () {
             .map(item => item.style)
             .sort()
         )];
+
+        // Create "styles" container and option elements
+        populatePizzaStyles(sortedUniquePizzaStyles);
+    }
+}
+
+function populateOptions(jsonArray) {
+    // Loop through json array
+    if (jsonArray != null) {
+        for (let i = 0; i < jsonArray.length; i++) {
+            // Create a new option element
+            let newOption = document.createElement('option');
         
+            // Set the value and text content of the new option
+            newOption.value = jsonArray[i];
+            newOption.textContent = jsonArray[i];
+        
+            // Append the new option to the select element
+            elementSelect.appendChild(newOption);
+        }
+    }
+}
+
+function populatePizzaStyles(styles) {
+    // Loop through array
+    if (styles != null) {
+        // Reference the styles element
+        let sectionStyles = document.querySelector('#pizzaStyles');
+
+        // Create a new section element
+        // let newSection = document.createElement('section');
+
+        // Create a new fieldset element
+        let newFieldset = document.createElement('fieldset');
+
+        // Create a new legend element
+        let newLegend = document.createElement('legend');
+
+        // Set the class of the new section
+        // newSection.className = category;
+
+        // Set the text of the new legend
+        // newLegend.textContent = category;
+        newLegend.textContent = "Pizza Style";
+
+        // Append the new legend to the parent element
+        newFieldset.appendChild(newLegend);
+
+        // Append the new fieldset to the parent element
+        sectionStyles.appendChild(newFieldset);
+
+        // Append the new section to the parent element
+        // sectionCategories.appendChild(newSection);
+
+        // Reference the fieldset as direct descendant of the section (category) element
+        // let sectionStyle = document.querySelector(`.${pizzaStyles}>fieldset`);
+        let sectionStyle = document.querySelector(`#pizzaStyles>fieldset`);
+
+        for (const style of styles) {
+            // Create a new div element
+            let newDiv = document.createElement('div');
+
+            // Create a new option element
+            let newOption = document.createElement('input');
+
+            // Create a new option label
+            let newLabel = document.createElement('label');
+
+            // Set the class of the new div
+            newDiv.className = "option";
+
+            // Set the name and value of the new option
+            // newOption.type = "radio";
+            // newOption.id = `chk${category}${countTopping}`;
+            // newOption.name = category;
+            // newOption.value = toppings[countTopping];
+            newOption.type = "radio";
+            newOption.id = style;
+            newOption.name = "pizzaStyles";
+            newOption.value = style;
+
+            // Set the "for" value and text content of the new label
+            newLabel.htmlFor = newOption.id;
+            newLabel.textContent = style;
+
+            // Append the new option and label to the parent element
+            newDiv.appendChild(newOption);
+            newDiv.appendChild(newLabel);
+
+            // Append the new div to the parent element
+            sectionStyle.appendChild(newDiv);
+        }
+
+        document.querySelectorAll('input[name="pizzaStyles"]').forEach(radio => {
+            radio.addEventListener('click', function() {
+                // Set global variable
+                pizzaStyle = this.value;
+
+                // Call event handler
+                clickStylesRadioButton(this.value);
+            });
+        });
+    }
+}
+
+function populatePizzaNames(names) {
+    // Loop through array
+    if (names != null) {
+        // Remove all child nodes
+        removeAllChildrenOfType('pizzaNames', 'fieldset');
+
+        // Reference the names element
+        let sectionNames = document.querySelector('#pizzaNames');
+
+        // Create a new section element
+        // let newSection = document.createElement('section');
+
+        // Create a new fieldset element
+        let newFieldset = document.createElement('fieldset');
+
+        // Create a new legend element
+        let newLegend = document.createElement('legend');
+
+        // Set the class of the new section
+        // newSection.className = category;
+
+        // Set the text of the new legend
+        // newLegend.textContent = category;
+        newLegend.textContent = "Pizza Name";
+
+        // Append the new legend to the parent element
+        newFieldset.appendChild(newLegend);
+
+        // Append the new fieldset to the parent element
+        sectionNames.appendChild(newFieldset);
+
+        // Append the new section to the parent element
+        // sectionCategories.appendChild(newSection);
+
+        // Reference the fieldset as direct descendant of the section (name) element
+        // let sectionStyle = document.querySelector(`.${pizzaStyles}>fieldset`);
+        let sectionName = document.querySelector(`#pizzaNames>fieldset`);
+
+        for (const name of names) {
+            // Create a new div element
+            let newDiv = document.createElement('div');
+
+            // Create a new option element
+            let newOption = document.createElement('input');
+
+            // Create a new option label
+            let newLabel = document.createElement('label');
+
+            // Set the class of the new div
+            newDiv.className = "option";
+
+            // Set the name and value of the new option
+            // newOption.type = "radio";
+            // newOption.id = `chk${category}${countTopping}`;
+            // newOption.name = category;
+            // newOption.value = toppings[countTopping];
+            newOption.type = "radio";
+            newOption.id = name;
+            newOption.name = "pizzaNames";
+            newOption.value = name;
+
+            // Set the "for" value and text content of the new label
+            newLabel.htmlFor = newOption.id;
+            newLabel.textContent = name;
+
+            // Append the new option and label to the parent element
+            newDiv.appendChild(newOption);
+            newDiv.appendChild(newLabel);
+
+            // Append the new div to the parent element
+            sectionName.appendChild(newDiv);
+        }
+
+        // document.querySelectorAll('input[name="pizzaNames"]').forEach(radio => {
+        //     radio.addEventListener('click', function() {
+        //         // Set global variable
+        //         pizzaStyle = this.value;
+
+        //         // Call event handler
+        //         clickNamesRadioButton(this.value);
+        //     });
+        // });
+    }
+}
+
+function removeAllChildrenOfType(parentId, childType) {
+    let parentElement = document.getElementById(parentId);
+    let children = parentElement.getElementsByTagName(childType);
+
+    // Convert HTMLCollection to an array to avoid issues with dynamic changes
+    let childrenArray = Array.from(children);
+
+    childrenArray.forEach(child => {
+        parentElement.removeChild(child);
+    });
+} 
+
+function clickStylesRadioButton(style) {
+    console.log("Selected pizza style:", style);
+    
+    if (allToppings != null) {
+        // Get unique and sorted Pizza Names filtered by Pizza Style
+        sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
+            allToppings
+            .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
+            .map(item => item.name)
+            .sort()
+        )];
+
+        // console.log(sortedUniquePizzaNamesFilteredByPizzaStyle);
+        
+        populatePizzaNames(sortedUniquePizzaNamesFilteredByPizzaStyle);
+    }
+}
+
+function doSomething(style) {
+    console.log("Selected pizza style:", style);
+    
+    if (allToppings != null) {
         // Get the unique Pizza Style
-        let indexPizzaStyle = sortedUniquePizzaStyles.indexOf('New York Style');
+        // let indexPizzaStyle = sortedUniquePizzaStyles.indexOf('New York Style');
         // let indexPizzaStyle = sortedUniquePizzaStyles.indexOf('Detroit Style');
-        pizzaStyle = sortedUniquePizzaStyles[indexPizzaStyle];
+        // let pizzaStyle = sortedUniquePizzaStyles[indexPizzaStyle];
 
         // Set innerText of Pizza Style element
-        elementPizzaStyle.innerText = pizzaStyle;
+        // elementPizzaStyle.innerText = pizzaStyle;
 
         // Get unique and sorted Pizza Names filtered by Pizza Style
         sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
@@ -103,12 +328,12 @@ function processApiData () {
         )];
         
         // Get the unique Pizza Name
-        let indexPizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle.indexOf('Mt Lumi');
+        // let indexPizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle.indexOf('Mt Lumi');
         // let indexPizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle.indexOf('The Meatball');
-        pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[indexPizzaName];
+        // pizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle[indexPizzaName];
         
         // Set innerText of Pizza Name element
-        elementPizzaName.innerText = pizzaName;
+        // elementPizzaName.innerText = pizzaName;
 
         // Get unique and sorted Pizza Toppings filtered by Pizza Name
         sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
@@ -155,23 +380,6 @@ function processApiData () {
                 // Create "toppings" checkbox elements
                 populateToppingsByCategory(category, sortedUniquePizzaToppingsFilteredByCategory)
             }
-        }
-    }
-}
-
-function populateOptions(jsonArray) {
-    // Loop through json array
-    if (jsonArray != null) {
-        for (let i = 0; i < jsonArray.length; i++) {
-            // Create a new option element
-            let newOption = document.createElement('option');
-        
-            // Set the value and text content of the new option
-            newOption.value = jsonArray[i];
-            newOption.textContent = jsonArray[i];
-        
-            // Append the new option to the select element
-            elementSelect.appendChild(newOption);
         }
     }
 }
@@ -304,7 +512,7 @@ function revealAnswers() {
     // Get data
     if (allToppings != null) {
         // Name of Pizza
-        let pizzaName = elementPizzaName.innerText;
+        // let pizzaName = elementPizzaName.innerText;
 
         // Get all checkboxes on the page
         const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
@@ -329,7 +537,7 @@ function hideAnswers() {
     // Get data
     if (allToppings != null) {
         // Name of Pizza
-        let pizzaName = elementPizzaName.innerText;
+        // let pizzaName = elementPizzaName.innerText;
 
         // Get all checkboxes on the page
         const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
