@@ -10,19 +10,19 @@
     /* margin: 2%; */
 }
 
-.categories {
+#pizzaCategories {
     /* margin: 2%; */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-.categories section {
+#pizzaCategories section {
     /* margin: 1%; */
     width: 33.33%;
 }
 
-.categories section fieldset {
+#pizzaCategories section fieldset {
     /* border: 3px solid purple; */
     display: flex;
     flex-direction: column;

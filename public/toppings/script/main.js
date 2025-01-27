@@ -193,11 +193,14 @@ function populatePizzaStyles(styles) {
 }
 
 function populatePizzaNames(names) {
+    // Remove all child nodes
+    removeAllChildrenOfType('pizzaCategories', 'section');
+
+    // Remove all child nodes
+    removeAllChildrenOfType('pizzaNames', 'fieldset');
+
     // Loop through array
     if (names != null) {
-        // Remove all child nodes
-        removeAllChildrenOfType('pizzaNames', 'fieldset');
-
         // Reference the names element
         let sectionNames = document.querySelector('#pizzaNames');
 
@@ -265,29 +268,17 @@ function populatePizzaNames(names) {
             sectionName.appendChild(newDiv);
         }
 
-        // document.querySelectorAll('input[name="pizzaNames"]').forEach(radio => {
-        //     radio.addEventListener('click', function() {
-        //         // Set global variable
-        //         pizzaStyle = this.value;
+        document.querySelectorAll('input[name="pizzaNames"]').forEach(radio => {
+            radio.addEventListener('click', function() {
+                // Set global variable
+                pizzaName = this.value;
 
-        //         // Call event handler
-        //         clickNamesRadioButton(this.value);
-        //     });
-        // });
+                // Call event handler
+                clickNamesRadioButton(this.value);
+            });
+        });
     }
 }
-
-function removeAllChildrenOfType(parentId, childType) {
-    let parentElement = document.getElementById(parentId);
-    let children = parentElement.getElementsByTagName(childType);
-
-    // Convert HTMLCollection to an array to avoid issues with dynamic changes
-    let childrenArray = Array.from(children);
-
-    childrenArray.forEach(child => {
-        parentElement.removeChild(child);
-    });
-} 
 
 function clickStylesRadioButton(style) {
     console.log("Selected pizza style:", style);
@@ -307,8 +298,26 @@ function clickStylesRadioButton(style) {
     }
 }
 
-function doSomething(style) {
-    console.log("Selected pizza style:", style);
+function clickNamesRadioButton(name) {
+    console.log("Selected pizza name:", name);
+    
+    if (allToppings != null) {
+        // Get unique and sorted Pizza Names filtered by Pizza Style
+        // sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
+        //     allToppings
+        //     .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
+        //     .map(item => item.name)
+        //     .sort()
+        // )];
+
+        // console.log(sortedUniquePizzaNamesFilteredByPizzaStyle);
+        
+        doSomething(name);
+    }
+}
+
+function doSomething(name) {
+    // console.log("Selected pizza style:", style);
     
     if (allToppings != null) {
         // Get the unique Pizza Style
@@ -320,12 +329,12 @@ function doSomething(style) {
         // elementPizzaStyle.innerText = pizzaStyle;
 
         // Get unique and sorted Pizza Names filtered by Pizza Style
-        sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
-            allToppings
-            .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
-            .map(item => item.name)
-            .sort()
-        )];
+        // sortedUniquePizzaNamesFilteredByPizzaStyle = [...new Set(
+        //     allToppings
+        //     .filter(item => item.style === pizzaStyle) // e.g. "Detroit Style"
+        //     .map(item => item.name)
+        //     .sort()
+        // )];
         
         // Get the unique Pizza Name
         // let indexPizzaName = sortedUniquePizzaNamesFilteredByPizzaStyle.indexOf('Mt Lumi');
@@ -338,7 +347,7 @@ function doSomething(style) {
         // Get unique and sorted Pizza Toppings filtered by Pizza Name
         sortedUniquePizzaToppingsFilteredByPizzaName = [...new Set(
             allToppings
-            .filter(item => item.name === pizzaName) // e.g. "The Meatball"
+            .filter(item => item.name === name) // e.g. "The Meatball"
             .map(item => item.description)
             .sort()
         )];
@@ -385,10 +394,13 @@ function doSomething(style) {
 }
 
 function populateCategories(categories) {
+    // Remove all child nodes
+    removeAllChildrenOfType('pizzaCategories', 'section');
+
     // Loop through array
     if (categories != null) {
         // Reference the categories element
-        let sectionCategories = document.querySelector('.categories');
+        let sectionCategories = document.querySelector('#pizzaCategories');
 
         for (const category of categories) {
             // Create a new section element
@@ -457,6 +469,18 @@ function populateToppingsByCategory(category, toppings) {
     }
 }
 
+function removeAllChildrenOfType(parentId, childType) {
+    let parentElement = document.getElementById(parentId);
+    let children = parentElement.getElementsByTagName(childType);
+
+    // Convert HTMLCollection to an array to avoid issues with dynamic changes
+    let childrenArray = Array.from(children);
+
+    childrenArray.forEach(child => {
+        parentElement.removeChild(child);
+    });
+} 
+
 function submitResponse() {
     // Get data
     if (allToppings != null) {
@@ -475,7 +499,7 @@ function submitResponse() {
         // }
 
         // Get all checkboxes on the page
-        const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
 
         // Filter checked checkboxes
         const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
@@ -498,7 +522,7 @@ function submitResponse() {
 
 function clearResponse() {
     // Get all checkboxes on the page
-    const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
 
     // Filter checked checkboxes
     const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
@@ -515,10 +539,10 @@ function revealAnswers() {
         // let pizzaName = elementPizzaName.innerText;
 
         // Get all checkboxes on the page
-        const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
 
         // Get all labels on the page
-        const labels = document.querySelectorAll('.categories label');
+        const labels = document.querySelectorAll('#pizzaCategories label');
 
         // Compare toppings selected with actual pizza
         sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
@@ -540,10 +564,10 @@ function hideAnswers() {
         // let pizzaName = elementPizzaName.innerText;
 
         // Get all checkboxes on the page
-        const checkboxes = document.querySelectorAll('.categories input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('#pizzaCategories input[type="checkbox"]');
 
         // Get all labels on the page
-        const labels = document.querySelectorAll('.categories label');
+        const labels = document.querySelectorAll('#pizzaCategories label');
 
         // Compare toppings selected with actual pizza
         sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
