@@ -169,12 +169,12 @@ function createElementsForPizzaNames(names) {
     removeAllChildrenOfType('containerPizzaCategories', 'section');
 
     // Remove all child nodes
-    removeAllChildrenOfType('pizzaNames', 'fieldset');
+    removeAllChildrenOfType('containerPizzaNames', 'fieldset');
 
     // Loop through array
     if (names != null) {
         // Reference the names element
-        let sectionNames = document.querySelector('#pizzaNames');
+        let sectionNames = document.querySelector('#containerPizzaNames');
 
         // Create a new fieldset element
         let newFieldset = document.createElement('fieldset');
@@ -192,7 +192,7 @@ function createElementsForPizzaNames(names) {
         sectionNames.appendChild(newFieldset);
 
         // Reference the fieldset as direct descendant of the section (name) element
-        let sectionName = document.querySelector(`#pizzaNames>fieldset`);
+        let sectionName = document.querySelector(`#containerPizzaNames>fieldset`);
 
         for (const name of names) {
             // Create a new div element
