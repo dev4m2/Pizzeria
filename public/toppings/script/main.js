@@ -158,7 +158,7 @@ function createElementsForPizzaStyles(styles) {
                 pizzaStyle = this.value;
 
                 // Call event handler
-                clickStylesRadioButton(pizzaStyle);
+                clickPizzaStylesRadioButton(pizzaStyle);
             });
         });
     }
@@ -231,7 +231,7 @@ function createElementsForPizzaNames(names) {
                 pizzaName = this.value;
 
                 // Call event handler
-                clickNamesRadioButton(pizzaName);
+                clickPizzaNamesRadioButton(pizzaName);
             });
         });
     }
@@ -344,7 +344,7 @@ function createElementsForPizzaToppingsByCategories(category, toppings) {
     }
 }
 
-function clickStylesRadioButton(style) {
+function clickPizzaStylesRadioButton(style) {
     console.log("Selected pizza style:", style);
     
     if (allToppings != null) {
@@ -360,7 +360,7 @@ function clickStylesRadioButton(style) {
     }
 }
 
-function clickNamesRadioButton(name) {
+function clickPizzaNamesRadioButton(name) {
     console.log("Selected pizza name:", name);
     
     if (allToppings != null) {
