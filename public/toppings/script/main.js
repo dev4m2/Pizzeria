@@ -1,3 +1,12 @@
+// TODO [x]: Move ref of chkRandomPizzaStyle to begining of code area
+// TODO [x]: Create functions for chkRandomPizzaName
+
+// Identify checkbox element
+const chkRandomPizzaStyle = document.querySelector('#chkRandomPizzaStyle');
+
+// Identify checkbox element
+const chkRandomPizzaName = document.querySelector('#chkRandomPizzaName');
+
 // Reference the btnLoadToppings element
 const btnLoadToppings = document.querySelector('#btnLoadToppings');
 
@@ -103,9 +112,6 @@ function processApiData () {
         // Get random index
         let randomIndex = Math.floor(Math.random() * sortedUniquePizzaStyles.length + 1); // 1-3 ???
 
-        // Identify checkbox element
-        const chkRandomPizzaStyle = document.querySelector('#chkRandomPizzaStyle');
-
         // Identify fieldset element
         const fieldsetPizzaStyle = document.querySelector('.pizzaStyle');
 
@@ -116,7 +122,7 @@ function processApiData () {
             // Disable fieldset
             fieldsetPizzaStyle.disabled = true;
 
-            // Get unique and sorted Pizza Toppings filtered by Pizza Name
+            // Get unique and sorted Pizza Toppings filtered by Pizza Style
             let sortedUniquePizzaStylesFilteredByStyleIndex = [...new Set(
                 allToppings
                 .filter(item => item.styleIndex === randomIndex) // e.g. "1 - New York Style" (toppings.json list "styleIndex" is 1-3)
@@ -266,17 +272,56 @@ function clickPizzaStylesRadioButton(style) {
             .sort()
         )];
         
+        // Create "names" group and option elements
         createContainerElement(sortedUniquePizzaNamesFilteredByPizzaStyle, 'containerPizzaNames', 'pizzaName', 'Pizza Name', 'radio');
 
-        document.querySelectorAll('input[name="pizzaName"]').forEach(radio => {
-            radio.addEventListener('click', function() {
-                // Set global variable
-                pizzaName = this.value;
+        // Get random index
+        let randomIndex = Math.ceil(Math.random() * sortedUniquePizzaNamesFilteredByPizzaStyle.length) // 1-7 ???
 
-                // Call event handler
-                clickPizzaNamesRadioButton(pizzaName);
+        // Identify fieldset element
+        const fieldsetPizzaName = document.querySelector('.pizzaName');
+
+        // Enable fieldset
+        fieldsetPizzaName.disabled = false;
+
+        if (chkRandomPizzaName.checked) {
+            // Disable fieldset
+            fieldsetPizzaName.disabled = true;
+
+            // Get unique and sorted Pizza Toppings filtered by Pizza Name
+            let sortedUniquePizzaNamesFilteredByNameIndex = [...new Set(
+                allToppings
+                // .filter(item => item.nameIndex === randomIndex) // e.g. "8 - New York Style - Mt Lumi" (toppings.json list "nameIndex" is 1-9)
+                .filter(item => item.style === style && item.nameIndex === randomIndex) // e.g. "8 - New York Style - Mt Lumi" (toppings.json list "nameIndex" is 1-9)
+                .map(item => item.name)
+                .sort()
+            )];
+
+            // return Pizza Name
+            pizzaName = sortedUniquePizzaNamesFilteredByNameIndex[0]; // first item in the returned array (ex. "Mt Lumi")
+            
+            // Get all radio buttons in this container
+            const radioButtons = document.querySelectorAll('#containerPizzaNames input[type="radio"]');
+
+            // Filter radio buttons for selected pizza name
+            const radioPizzaName = Array.from(radioButtons).filter(radio => radio.value === pizzaName);
+
+            // Select radio button
+            radioPizzaName[0].checked = true; // first item in the returned array
+
+            clickPizzaNamesRadioButton(pizzaName);
+        }
+        else {
+            document.querySelectorAll('input[name="pizzaName"]').forEach(radio => {
+                radio.addEventListener('click', function() {
+                    // Set global variable
+                    pizzaName = this.value;
+    
+                    // Call event handler
+                    clickPizzaNamesRadioButton(pizzaName);
+                });
             });
-        });
+        }
     }
 }
 
