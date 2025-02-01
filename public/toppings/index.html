@@ -7,15 +7,23 @@
     <title>Pizzeria Toppings</title>
 </head>
 <body>
-    <h1>Pizzeria Toppings Quiz</h1>
+    <main>
+        <h1>Pizzeria Toppings Quiz</h1>
+    </main>
 
     <button id="btnLoadToppings">Load Toppings</button>
 
-    <input type="checkbox" name="randomPizzaStyle" id="chkRandomPizzaStyle">
-    <label for="chkRandomPizzaStyle">Random Pizza Style</label>
+    <section class="chkRandom">
+        <div class="randomStyle">
+            <input type="checkbox" name="randomPizzaStyle" id="chkRandomPizzaStyle">
+            <label for="chkRandomPizzaStyle">Random Pizza Style</label>
+        </div>
 
-    <input type="checkbox" name="randomPizzaName" id="chkRandomPizzaName">
-    <label for="chkRandomPizzaName">Random Pizza Name</label>
+        <div class="randomName">
+            <input type="checkbox" name="randomPizzaName" id="chkRandomPizzaName">
+            <label for="chkRandomPizzaName">Random Pizza Name</label>
+        </div>
+    </section>
 
     <form action="">
         <section id="containerPizzaStyles">
@@ -37,7 +45,6 @@
                 <button type="button" id="btnAnswers">Reveal Answers</button>
             </div>
         </section>
-
     </form>
 
     <script src="script/main.js"></script>

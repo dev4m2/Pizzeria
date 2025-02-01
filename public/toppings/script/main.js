@@ -52,6 +52,19 @@ let pizzaName = '';
 // Reveal/Hide answers
 let revealAnswers = false;
 
+// TEST: ***** FOR TESTING PURPOSES ONLY *****
+let testing = true;
+
+// TEST: ***** FOR TESTING PURPOSES ONLY *****
+if (testing) {
+    chkRandomPizzaStyle.checked = true;
+    chkRandomPizzaName.checked = true;
+    window.onload = () => {
+        fetchJsonFile();
+    };
+}
+
+
 // Function to fetch the JSON file and read its contents
 async function fetchJsonFile() {
     try {
@@ -309,6 +322,11 @@ function clickPizzaStylesRadioButton(style) {
             radioPizzaName[0].checked = true; // first item in the returned array
 
             clickPizzaNamesRadioButton(pizzaName);
+
+            // TEST: ***** FOR TESTING PURPOSES ONLY *****
+            if (testing) {
+                revealHideAnswers();
+            }
         }
         else {
             document.querySelectorAll('input[name="pizzaName"]').forEach(radio => {
