@@ -1,5 +1,8 @@
 // TODO [x]: Move ref of chkRandomPizzaStyle to begining of code area
 // TODO [x]: Create functions for chkRandomPizzaName
+// TODO [x]: Toggle button to reveal/hide answers
+// TODO []: Work on styling of webpage
+// TODO []: Display success/failure on webpage vs "alert"
 
 // Identify checkbox element
 const chkRandomPizzaStyle = document.querySelector('#chkRandomPizzaStyle');
@@ -16,11 +19,8 @@ const btnSubmitResponse = document.querySelector('#btnSubmitResponse');
 // Reference the btnClearResponse element
 const btnClearResponse = document.querySelector('#btnClearResponse');
 
-// Reference the btnRevealAnswers element
-const btnRevealAnswers = document.querySelector('#btnRevealAnswers');
-
-// Reference the btnHideAnswers element
-const btnHideAnswers = document.querySelector('#btnHideAnswers');
+// Reference the btnAnswers element
+const btnAnswers = document.querySelector('#btnAnswers');
 
 // Global variable to store the fetched data
 let allToppings = null;
@@ -49,6 +49,9 @@ let pizzaStyle = '';
 // Name of Pizza
 let pizzaName = '';
 
+// Reveal/Hide answers
+let revealAnswers = false;
+
 // Function to fetch the JSON file and read its contents
 async function fetchJsonFile() {
     try {
@@ -65,9 +68,6 @@ async function fetchJsonFile() {
 
         // Copy data values (not reference) to global array of objects
         allToppings = JSON.parse(JSON.stringify(data));
-
-        // Disable button
-        // btnLoadToppings.disabled = true;
 
         // Process the returned data
         processApiData(data);
@@ -291,7 +291,6 @@ function clickPizzaStylesRadioButton(style) {
             // Get unique and sorted Pizza Toppings filtered by Pizza Name
             let sortedUniquePizzaNamesFilteredByNameIndex = [...new Set(
                 allToppings
-                // .filter(item => item.nameIndex === randomIndex) // e.g. "8 - New York Style - Mt Lumi" (toppings.json list "nameIndex" is 1-9)
                 .filter(item => item.style === style && item.nameIndex === randomIndex) // e.g. "8 - New York Style - Mt Lumi" (toppings.json list "nameIndex" is 1-9)
                 .map(item => item.name)
                 .sort()
@@ -343,6 +342,12 @@ function removeAllChildrenOfType(parentId, childType) {
     childrenArray.forEach(child => {
         parentElement.removeChild(child);
     });
+
+    // Reset
+    revealAnswers = false;
+
+    // Change button text
+    btnAnswers.innerText = "Reveal Answers";
 } 
 
 function submitResponse() {
@@ -388,47 +393,41 @@ function clearResponse() {
     });
 }
 
-function revealAnswers() {
+function revealHideAnswers() {
     // Get data
     if (allToppings != null) {
         // Get all checkboxes in this container
         const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
 
-        // Get all labels on the page
+        // Get all labels in this container
         const labels = document.querySelectorAll('#containerPizzaCategories label');
+
+        // Invert boolean
+        revealAnswers = !revealAnswers;
 
         // Compare toppings selected with actual pizza
         sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
             // checkboxes.forEach(checkbox => {
-            //     checkbox.value === filteredTopping ? checkbox.checked = true : null;
+            //     if (revealAnswers) {
+            //         checkbox.value === filteredTopping ? checkbox.checked = true : null;
+            //     }
+            //     else {
+            //         checkbox.value === filteredTopping ? checkbox.checked = false : null;
+            //     }
             // });
 
             labels.forEach(label => {
-                label.textContent === filteredTopping ? label.style.backgroundColor = "cyan" : null;
+                if (revealAnswers) {
+                    label.textContent === filteredTopping ? label.style.backgroundColor = "cyan" : null;
+                }
+                else {
+                    label.textContent === filteredTopping ? label.style.backgroundColor = "" : null;
+                }
             });
         })
-    }
-}
 
-function hideAnswers() {
-    // Get data
-    if (allToppings != null) {
-        // Get all checkboxes in this container
-        const checkboxes = document.querySelectorAll('#containerPizzaCategories input[type="checkbox"]');
-
-        // Get all labels on the page
-        const labels = document.querySelectorAll('#containerPizzaCategories label');
-
-        // Compare toppings selected with actual pizza
-        sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
-            // checkboxes.forEach(checkbox => {
-            //     checkbox.value === filteredTopping ? checkbox.checked = false : null;
-            // });
-
-            labels.forEach(label => {
-                label.textContent === filteredTopping ? label.style.backgroundColor = "" : null;
-            });
-        })
+        // Change button text
+        revealAnswers ? btnAnswers.innerText = "Hide Answers" : btnAnswers.innerText = "Reveal Answers";
     }
 }
 
@@ -438,11 +437,8 @@ btnLoadToppings.addEventListener('click', fetchJsonFile);
 // Check my responses (answers)
 btnSubmitResponse.addEventListener('click', submitResponse);
 
-// Clear all responses (answers)
+// Clear my responses (answers)
 btnClearResponse.addEventListener('click', clearResponse);
 
-// Show correct answers
-btnRevealAnswers.addEventListener('click', revealAnswers);
-
-// Clear correct answers
-btnHideAnswers.addEventListener('click', hideAnswers);
+// Show/Hide correct answers
+btnAnswers.addEventListener('click', revealHideAnswers);
