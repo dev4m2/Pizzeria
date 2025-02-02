@@ -59,6 +59,7 @@ let testing = true;
 if (testing) {
     chkRandomPizzaStyle.checked = true;
     chkRandomPizzaName.checked = true;
+    btnLoadToppings.style.display = 'none';
     window.onload = () => {
         fetchJsonFile();
     };
