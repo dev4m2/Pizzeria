@@ -2,6 +2,7 @@
 // TODO [x]: Create functions for chkRandomPizzaName
 // TODO [x]: Toggle button to reveal/hide answers
 // TODO [x]: Store "Random" checkbox settings on page refresh (sessionStorage)
+// TODO [x]: Store "Reveal Answers" checkbox settings on page refresh (sessionStorage)
 // TODO []: Work on styling of webpage
 // TODO []: Display success/failure on webpage vs "alert"
 // TODO []: Add "gh-pages" branch to GitHub repo (publish website)
@@ -13,6 +14,9 @@ const chkRandomPizzaStyle = document.querySelector('#chkRandomPizzaStyle');
 // Identify checkbox element
 const chkRandomPizzaName = document.querySelector('#chkRandomPizzaName');
 
+// Identify checkbox element
+const chkRevealAnswers = document.querySelector('#chkRevealAnswers');
+
 // Reference the btnLoadToppings element
 const btnLoadToppings = document.querySelector('#btnLoadToppings');
 
@@ -21,9 +25,6 @@ const btnSubmitResponse = document.querySelector('#btnSubmitResponse');
 
 // Reference the btnClearResponse element
 const btnClearResponse = document.querySelector('#btnClearResponse');
-
-// Reference the btnAnswers element
-const btnAnswers = document.querySelector('#btnAnswers');
 
 // Global variable to store the fetched data
 let allToppings = null;
@@ -68,6 +69,14 @@ window.onload = () => {
     let chkRandomPizzaNameKey = `${chkRandomPizzaName.id}.checked`;
     const isRandomPizzaNameKeyChecked = sessionStorage.getItem(chkRandomPizzaNameKey) === 'true';
     chkRandomPizzaName.checked = isRandomPizzaNameKeyChecked;
+    
+    // Check session variable
+    const chkRevealAnswersKey = `${chkRevealAnswers.id}.checked`;
+    // const isRevealAnswersKeyChecked = sessionStorage.getItem(chkRevealAnswersKey) === 'true';
+    revealAnswers = sessionStorage.getItem(chkRevealAnswersKey) === 'true';
+    chkRevealAnswers.checked = revealAnswers;
+    // chkRevealAnswers.checked = isRevealAnswersKeyChecked;
+    // chkRevealAnswers.checked = sessionStorage.getItem(chkRevealAnswersKey) === 'true';
 
     // TESTING: ***** FOR TESTING PURPOSES ONLY *****
     if (testing) {
@@ -333,11 +342,6 @@ function clickPizzaStylesRadioButton(style) {
             radioPizzaName[0].checked = true; // first item in the returned array
 
             clickPizzaNamesRadioButton(pizzaName);
-
-            // TESTING: ***** FOR TESTING PURPOSES ONLY *****
-            if (testing) {
-                revealHideAnswers();
-            }
         }
         else {
             document.querySelectorAll('input[name="pizzaName"]').forEach(radio => {
@@ -359,10 +363,7 @@ function clickPizzaNamesRadioButton(name) {
     if (allToppings != null) {
         constructPizzaCategoriesAndToppings(name);
 
-        // TESTING: ***** FOR TESTING PURPOSES ONLY *****
-        if (testing) {
-            revealHideAnswers();
-        }
+        displayAnswers();
     }
 }
 
@@ -376,12 +377,6 @@ function removeAllChildrenOfType(parentId, childType) {
     childrenArray.forEach(child => {
         parentElement.removeChild(child);
     });
-
-    // Reset
-    revealAnswers = false;
-
-    // Change button text
-    btnAnswers.innerText = "Reveal Answers";
 } 
 
 function submitResponse() {
@@ -427,7 +422,7 @@ function clearResponse() {
     });
 }
 
-function revealHideAnswers() {
+function displayAnswers() {
     // Get data
     if (allToppings != null) {
         // Get all checkboxes in this container
@@ -435,9 +430,6 @@ function revealHideAnswers() {
 
         // Get all labels in this container
         const labels = document.querySelectorAll('#containerPizzaCategories label');
-
-        // Invert boolean
-        revealAnswers = !revealAnswers;
 
         // Compare toppings selected with actual pizza
         sortedUniquePizzaToppingsFilteredByPizzaName.forEach(filteredTopping => {
@@ -459,15 +451,24 @@ function revealHideAnswers() {
                 }
             });
         })
-
-        // Change button text
-        revealAnswers ? btnAnswers.innerText = "Hide Answers" : btnAnswers.innerText = "Reveal Answers";
     }
 }
 
 function checkboxChanged(event) {
     let customKey = `${event.target.id}.checked`;
     sessionStorage.setItem(customKey, event.target.checked);
+
+    switch (event.target.id) {
+        case 'chkRandomPizzaStyle':
+            break;
+        case 'chkRandomPizzaName':
+            break;
+        case 'chkRevealAnswers':
+            revealAnswers = event.target.checked;
+            displayAnswers();
+            break;
+        default:
+    }
 }
 
 // Retrieve JSON data
@@ -479,11 +480,11 @@ btnSubmitResponse.addEventListener('click', submitResponse);
 // Clear my responses (answers)
 btnClearResponse.addEventListener('click', clearResponse);
 
-// Show/Hide correct answers
-btnAnswers.addEventListener('click', revealHideAnswers);
-
 // Checkbox changed
 chkRandomPizzaStyle.addEventListener('change', checkboxChanged);
 
 // Checkbox changed
 chkRandomPizzaName.addEventListener('change', checkboxChanged);
+
+// Checkbox changed
+chkRevealAnswers.addEventListener('change', checkboxChanged);
