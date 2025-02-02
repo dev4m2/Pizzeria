@@ -341,7 +341,7 @@ function clickPizzaStylesRadioButton(style) {
             // Select radio button
             radioPizzaName[0].checked = true; // first item in the returned array
 
-            clickPizzaNamesRadioButton(pizzaName);
+            displayPizzaName(pizzaName);
         }
         else {
             document.querySelectorAll('input[name="pizzaName"]').forEach(radio => {
@@ -350,14 +350,14 @@ function clickPizzaStylesRadioButton(style) {
                     pizzaName = this.value;
     
                     // Call event handler
-                    clickPizzaNamesRadioButton(pizzaName);
+                    displayPizzaName(pizzaName);
                 });
             });
         }
     }
 }
 
-function clickPizzaNamesRadioButton(name) {
+function displayPizzaName(name) {
     console.log("Selected pizza name:", name);
     
     if (allToppings != null) {
