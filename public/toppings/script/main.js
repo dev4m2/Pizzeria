@@ -1,8 +1,11 @@
 // TODO [x]: Move ref of chkRandomPizzaStyle to begining of code area
 // TODO [x]: Create functions for chkRandomPizzaName
 // TODO [x]: Toggle button to reveal/hide answers
+// TODO []: Store "Random" checkbox settings on page refresh
 // TODO []: Work on styling of webpage
 // TODO []: Display success/failure on webpage vs "alert"
+// TODO []: Add "gh-pages" branch to GitHub repo (publish website)
+
 
 // Identify checkbox element
 const chkRandomPizzaStyle = document.querySelector('#chkRandomPizzaStyle');
