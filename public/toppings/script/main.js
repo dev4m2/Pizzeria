@@ -143,7 +143,7 @@ function processApiData () {
         createContainerElement(sortedUniquePizzaStyles, 'containerPizzaStyles', 'pizzaStyle', 'Pizza Style', 'radio');
 
         // Get random index
-        let randomIndex = Math.floor(Math.random() * sortedUniquePizzaStyles.length + 1); // 1-3 ???
+        let randomIndex = Math.ceil(Math.random() * sortedUniquePizzaStyles.length); // 1-3 ???
 
         // Identify fieldset element
         const fieldsetPizzaStyle = document.querySelector('.pizzaStyle');
