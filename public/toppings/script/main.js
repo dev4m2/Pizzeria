@@ -175,7 +175,7 @@ function processApiData () {
             // Select radio button
             radioPizzaStyle[0].checked = true; // first item in the returned array
 
-            clickPizzaStylesRadioButton(pizzaStyle);
+            displayPizzaStyle(pizzaStyle);
         }
         else {
             document.querySelectorAll('input[name="pizzaStyle"]').forEach(radio => {
@@ -184,7 +184,7 @@ function processApiData () {
                     pizzaStyle = this.value;
     
                     // Call event handler
-                    clickPizzaStylesRadioButton(pizzaStyle);
+                    displayPizzaStyle(pizzaStyle);
                 });
             });
         }
@@ -289,7 +289,7 @@ function constructPizzaCategoriesAndToppings(name) {
     }
 }
 
-function clickPizzaStylesRadioButton(style) {
+function displayPizzaStyle(style) {
     console.log("Selected pizza style:", style);
     
     // Remove all child nodes
