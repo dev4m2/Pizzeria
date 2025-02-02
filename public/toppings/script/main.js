@@ -1,7 +1,7 @@
 // TODO [x]: Move ref of chkRandomPizzaStyle to begining of code area
 // TODO [x]: Create functions for chkRandomPizzaName
 // TODO [x]: Toggle button to reveal/hide answers
-// TODO []: Store "Random" checkbox settings on page refresh
+// TODO [x]: Store "Random" checkbox settings on page refresh (sessionStorage)
 // TODO []: Work on styling of webpage
 // TODO []: Display success/failure on webpage vs "alert"
 // TODO []: Add "gh-pages" branch to GitHub repo (publish website)
@@ -55,19 +55,26 @@ let pizzaName = '';
 // Reveal/Hide answers
 let revealAnswers = false;
 
-// TEST: ***** FOR TESTING PURPOSES ONLY *****
+// TESTING: ***** FOR TESTING PURPOSES ONLY *****
 let testing = true;
 
-// TEST: ***** FOR TESTING PURPOSES ONLY *****
-if (testing) {
-    chkRandomPizzaStyle.checked = true;
-    chkRandomPizzaName.checked = true;
-    btnLoadToppings.style.display = 'none';
-    window.onload = () => {
-        fetchJsonFile();
-    };
-}
+window.onload = () => {
+    // Check session variable
+    let chkRandomPizzaStyleKey = `${chkRandomPizzaStyle.id}.checked`;
+    const isRandomPizzaStyleKeyChecked = sessionStorage.getItem(chkRandomPizzaStyleKey) === 'true';
+    chkRandomPizzaStyle.checked = isRandomPizzaStyleKeyChecked;
+    
+    // Check session variable
+    let chkRandomPizzaNameKey = `${chkRandomPizzaName.id}.checked`;
+    const isRandomPizzaNameKeyChecked = sessionStorage.getItem(chkRandomPizzaNameKey) === 'true';
+    chkRandomPizzaName.checked = isRandomPizzaNameKeyChecked;
 
+    // TESTING: ***** FOR TESTING PURPOSES ONLY *****
+    if (testing) {
+        btnLoadToppings.style.display = 'none';
+        fetchJsonFile();
+    }
+};
 
 // Function to fetch the JSON file and read its contents
 async function fetchJsonFile() {
@@ -327,7 +334,7 @@ function clickPizzaStylesRadioButton(style) {
 
             clickPizzaNamesRadioButton(pizzaName);
 
-            // TEST: ***** FOR TESTING PURPOSES ONLY *****
+            // TESTING: ***** FOR TESTING PURPOSES ONLY *****
             if (testing) {
                 revealHideAnswers();
             }
@@ -351,6 +358,11 @@ function clickPizzaNamesRadioButton(name) {
     
     if (allToppings != null) {
         constructPizzaCategoriesAndToppings(name);
+
+        // TESTING: ***** FOR TESTING PURPOSES ONLY *****
+        if (testing) {
+            revealHideAnswers();
+        }
     }
 }
 
@@ -453,6 +465,11 @@ function revealHideAnswers() {
     }
 }
 
+function checkboxChanged(event) {
+    let customKey = `${event.target.id}.checked`;
+    sessionStorage.setItem(customKey, event.target.checked);
+}
+
 // Retrieve JSON data
 btnLoadToppings.addEventListener('click', fetchJsonFile);
 
@@ -464,3 +481,9 @@ btnClearResponse.addEventListener('click', clearResponse);
 
 // Show/Hide correct answers
 btnAnswers.addEventListener('click', revealHideAnswers);
+
+// Checkbox changed
+chkRandomPizzaStyle.addEventListener('change', checkboxChanged);
+
+// Checkbox changed
+chkRandomPizzaName.addEventListener('change', checkboxChanged);
