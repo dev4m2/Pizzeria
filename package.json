@@ -3,7 +3,7 @@
       "start": "nodemon index.js"
     },
     "dependencies": {
-      "express": "^4.22.1",
+      "express": "^4.22.2",
       "path-to-regexp": "^0.1.13"
     },
     "devDependencies": {
